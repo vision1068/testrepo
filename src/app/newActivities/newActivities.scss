@@ -1,0 +1,39 @@
+.new-activities{
+  .upload{
+    border: 1px solid $color-code-2;
+    height: 550px;
+    position: relative;
+    background:$color-code-8  no-repeat;
+    background-size: cover;
+    > div{
+      padding: 137px 0;
+    }
+    .icon i{
+      font-size: 100px;
+      color: $primary;
+    }
+    .change-cover{
+      position: absolute;
+      top:40px;
+      right:40px;
+    }
+  }
+  form{
+    max-width: 800px;
+    width: 100%;
+    margin: 0  auto 80px auto;
+    padding: 0 15px;
+    h3{
+      margin: 80px 0 40px;
+    }
+    .category{
+      margin: 15px 0;
+      padding-right: 0;
+    }
+    button{
+      margin-top: 50px;
+      margin-right: 10px;
+    }
+  }
+}
+

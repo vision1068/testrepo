@@ -1,0 +1,113 @@
+  <form name="form" ng-submit="vm.signUp(form)" novalidate>
+    <fieldset class="form-group round" ng-class="{'has-error' : (form.email.$error.required || form.email.$error.email) &&  vm.submitted}">
+      <input type="email" class="form-control" name="email" placeholder="Email Address" ng-model="vm.user.email" required>
+    </fieldset>
+    <fieldset class="form-group round" ng-class="{'has-error' : form.fname.$error.required  &&  vm.submitted}">
+      <input type="text" class="form-control" name="fname"  placeholder="First Name" ng-model="vm.user.firstname" required>
+    </fieldset>
+    <fieldset class="form-group round" ng-class="{'has-error' : form.lname.$error.required  &&  vm.submitted}">
+      <input type="text" class="form-control" name="lname"  placeholder="Last Name" ng-model="vm.user.lastname" required>
+    </fieldset>
+    <fieldset class="form-group round" ng-class="{'has-error' : (form.password.$error.required  && vm.submitted) || vm.passwordError}">
+      <input type="password" class="form-control" name="password"  placeholder="Password" ng-model="vm.user.password" required ng-keyup="vm.passwordValidation()">
+      <small class="text-danger" ng-if="vm.passwordError" data-ng-bind="vm.passwordError"></small>
+    </fieldset>
+    <fieldset class="form-group round" ng-class="{'has-error' : (form.password.$error.required || vm.user.password != vm.confirmPassword) &&  vm.submitted}">
+      <input type="password" class="form-control has-error" name="confirmPassword" ng-model="vm.confirmPassword" placeholder="Confirm Password">
+      <small class="text-danger" ng-if="(vm.user.password != vm.confirmPassword) &&  vm.confirmPassword.length">Confirm password is not match</small>
+    </fieldset>
+    <fieldset class="form-group round">
+      <div class="row">
+        <div class="col-sm-2 input-label">
+          <label>Birth Date</label>
+        </div>
+        <div class="col-sm-10">
+          <div class="row">
+            <div class="col-sm-4">
+              <div class="select" ng-class="{'has-error' : vm.month == 'Months'  &&  vm.submitted}">
+                <select class="form-control"  name="month"  ng-model="vm.month" required>
+                  <option ng-repeat="month in vm.months" value="{{month}}">{{month}}</option>
+                </select>
+                <i class="icon-dropdown-icon"></i>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="select" ng-class="{'has-error' : (form.day.$error.day = (vm.day == 'Days'))  &&  vm.submitted}">
+                <select class="form-control" ng-model="vm.day" required>
+                  <option ng-repeat="day in vm.days" value="{{day}}">{{day}}</option>
+                </select>
+                <i class="icon-dropdown-icon"></i>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="select" ng-class="{'has-error' : (form.year.$error.year = (vm.year == 'Years'))  &&  vm.submitted}">
+                <select class="form-control" ng-model="vm.year">
+                  <option ng-repeat="year in vm.years" value="{{year}}">{{year}}</option>
+                </select>
+                <i class="icon-dropdown-icon"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </fieldset>
+    <fieldset class="form-group round">
+      <div class="row">
+        <div class="col-sm-2 input-label">
+          <label>Gender</label>
+        </div>
+        <div class="col-sm-10">
+          <div class="select" ng-class="{'has-error' : (form.gender.$error.gender = (vm.user.gender == 'Gender'))  &&  vm.submitted}">
+            <select class="form-control" ng-options="gender.value as gender.label for gender in vm.genders" ng-model="vm.user.gender">
+            </select>
+            <i class="icon-dropdown-icon"></i>
+          </div>
+        </div>
+      </div>
+    </fieldset>
+    <fieldset class="form-group">
+      <div class="row">
+        <div class="col-sm-2 input-label">
+          <label>Spoken Languages</label>
+        </div>
+        <div class="col-sm-10">
+          <div class="select">
+            <input-auto-complete
+              placeholder="Select Spoken Languages"
+              max="5"
+              only="true"
+              display="name"
+              tags-array="vm.user.languages"
+              conditions="{{vm.conditionsLanguage}}">
+            </input-auto-complete>
+          </div>
+        </div>
+      </div>
+    </fieldset>
+    <fieldset class="form-group">
+      <div class="row">
+        <div class="col-sm-2 input-label">
+          <label>City</label>
+        </div>
+        <div class="col-sm-10">
+          <div class="select " ng-class="{'has-error' : !vm.city.length  &&  vm.submitted}">
+            <input-auto-complete
+              placeholder="Select city"
+              max="1"
+              only="true"
+              display="name"
+              tags-array="vm.city"
+              conditions="{{vm.conditions}}">
+            </input-auto-complete>
+          </div>
+        </div>
+      </div>
+    </fieldset>
+    <fieldset>
+      <button type="submit" class="btn primary-btn pull-right" ng-disabled="vm.loading">Sing Up
+        <span ng-if="vm.loading">
+          <i class="glyphicon glyphicon-repeat gly-spin"></i>
+        </span>
+      </button>
+    </fieldset>
+  </form>

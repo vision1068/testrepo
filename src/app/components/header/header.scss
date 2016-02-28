@@ -1,0 +1,186 @@
+.actiloo-header{
+  header{
+    height: 80px;
+    .header{
+      height: 80px;
+      margin: 0;
+      border-color: $color-code-2 ;
+      background: $color-code-1;
+      box-shadow: 5px 5px 5px rgba(174, 174, 174, 0.55);
+      > div{
+        padding: 15px;
+        .navbar-header{
+          button span{
+            background: $primary;
+          }
+        }
+
+          .navbar-brand{
+              i{
+                position: absolute;
+                font-size: 145px;
+                line-height: 0;
+                top: -32px;
+                color:$primary;
+            }
+          }
+
+        ul{
+          background: $color-code-1;
+          li{
+            margin-left: 20px;
+            a{
+              color: $color-code-3;
+              padding-left: 25px;
+              &:hover{
+                background: none;
+                color: $primary;
+              }
+              i{
+                color: $primary;
+                position: absolute;
+                left: 0;
+                font-size: 20px;
+              }
+            }
+          }
+          li:first-child{
+            margin-left: 0;
+          }
+          li.active{
+            a{
+              font-weight: bold ;
+              color: $primary;
+            }
+          }
+          .profile{
+            a{
+              padding-left: 60px;
+              i.user{
+                left: 0;
+                top: 0;
+                font-size: 50px;
+              }
+              .pic{
+                width: 50px;
+                height: 50px;
+                background: $color-code-1;
+                border:1px solid $primary;
+                border-radius: 50%;
+                position: absolute;
+                left: 0;
+                top: 0;
+                overflow: hidden;
+              }
+              i.dropdown{
+                position: static;
+                padding: 0 5px;
+                font-size: 10px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.authenticated-bar{
+  min-height: 50px;
+  background: $color-code-4;
+  z-index: 1;
+  width: 100%;
+  p{
+    margin: 0;
+    line-height: 48px;
+    text-align: center;
+    i{
+      padding-right: 10px ;
+      font-size: 17px;
+      color: $primary;
+    }
+    strong{
+      padding: 0 20px;
+    }
+    button{
+      text-transform: capitalize !important;
+    }
+  }
+
+}
+
+
+//Popover Style Start From Here.....
+.popover{
+  width: 276px;
+  .popover-content{
+    width: 300px;
+    padding: 0;
+    .popover{
+      top: 80px !important;
+    }
+    .arrow {
+      left: 25% !important;
+    }
+    ul {
+      list-style-type: none;
+      padding: 15px 0 7px 15px;
+      margin: 0;
+      li {
+        list-style: none;
+        display: block;
+        a {
+          text-decoration: none;
+          display: flex;
+          color: $color-code-3;
+          font-size: 14px;
+          line-height: 36px;
+          i{
+            color: $primary;
+            margin-right: 15px;
+            padding: 0 0 0 0;
+            font-size: 20px;
+          }
+          span{
+            margin-top: -2px;
+          }
+        }
+        a:hover{
+          color: $primary;
+        }
+      }
+    }
+  }
+
+}
+
+
+@media (min-width: $screen-xs-min) and (max-width: $screen-xs-max) {
+  header{
+    .navbar-collapse{
+      box-shadow: 5px 5px 5px rgba(174, 174, 174, 0.55);
+      ul.navbar-nav{
+        margin-bottom: 0;
+        li.profile{
+          a{
+            padding-left: 25px !important;
+            i.user{
+              top: inherit !important;
+              font-size: 20px !important;
+            }
+            .pic{
+              width: 20px;
+              height: 20px;
+              top: inherit !important;
+              img{
+                width: 20px;
+                height: 20px;
+              }
+            }
+          }
+        }
+
+      }
+    }
+  }
+}

@@ -1,0 +1,472 @@
+<div class="single-reservation">
+
+  <div class="page-loading" ng-if="vm.loading">
+    <i class="glyphicon glyphicon-repeat gly-spin"></i>
+  </div>
+
+  <div ng-if="!vm.loading">
+    <!-- cover-->
+    <div class="cover" ng-style="{'background-image': vm.coverIs}"></div>
+
+    <!-- Detail -->
+    <div class="container activity-details">
+      <div class="row">
+
+        <!-- Left Panel -->
+        <div class="col-md-3 left-panel">
+          <!-- USER WIDGET IF PART  == 'REQUESTER' -->
+          <div class="widget user animated zoomIn" ng-show="vm.reservation.part == 'REQUESTER'">
+            <div class="image" ng-if="vm.reservation.activity.user.avatar">
+            <img ng-src="{{vm.reservation.activity.user.avatar}}" width="55" height="55">
+          </div>
+            <h3 data-ng-bind="vm.reservation.activity.user.firstname + ' ' + (vm.reservation.activity.user.lastname || '') "></h3>
+            <div class="widget-detail">
+              <p>
+                <span data-ng-bind="('AGE' | translate) + ' : '"></span>
+                <strong data-ng-bind="vm.reservation.activity.user.age"></strong>
+              </p>
+              <p>
+                <span data-ng-bind="('GENDER' | translate) + ' : '"></span>
+                <strong data-ng-bind="(vm.reservation.activity.user.gender == 'M') ? ('MALE' | translate) : ('FEMALE' | translate) "></strong>
+              </p>
+              <p>
+                <span data-ng-bind="('SPOKEN_LANGUAGES' | translate) + ' : '"></span>
+                <strong ng-repeat="language in vm.reservation.activity.languages">
+                  <span data-ng-bind="language.name"></span>
+                  <span ng-if="vm.activities.languages.length > 1 && $index != vm.activities.languages.length-1">, </span>
+                </strong>
+              </p>
+              <p ng-show="vm.reservation.activity.user.joined">
+                <span data-ng-bind="('JOINED' | translate) + ' : '"></span>
+                <strong data-ng-bind="vm.reservation.activity.user.joined | dateFilter">
+                </strong>
+              </p>
+            </div>
+          </div>
+          <!-- USER WIDGET IF PART  == 'PUBLISHER' -->
+          <div class="widget user animated zoomIn" ng-show="vm.reservation.part == 'PUBLISHER'">
+            <div class="image" ng-if="vm.reservation.user.avatar">
+              <img ng-src="{{vm.reservation.user.avatar}}" width="55" height="55">
+            </div>
+            <h3 data-ng-bind="vm.reservation.user.firstname + ' ' + (vm.reservation.user.lastname || '') "></h3>
+            <div class="widget-detail">
+              <p>
+                <span data-ng-bind="('AGE' | translate) + ' : '"></span>
+                <strong data-ng-bind="vm.reservation.user.age"></strong>
+              </p>
+              <p>
+                <span data-ng-bind="('GENDER' | translate) + ' : '"></span>
+                <strong data-ng-bind="(vm.reservation.user.gender == 'M') ? ('MALE' | translate) : ('FEMALE' | translate) "></strong>
+              </p>
+              <p ng-show="vm.reservation.user.joined">
+                <span data-ng-bind="('JOINED' | translate) + ' : '"></span>
+                <strong data-ng-bind="vm.reservation.activity.user.joined | dateFilter">
+                </strong>
+              </p>
+            </div>
+          </div>
+          <!-- WIDGET DETAILS -->
+          <div class="widget details animated zoomIn">
+            <h3 data-ng-bind="'DETAILS' | translate"></h3>
+            <form class="widget-detail" name="form" novalidate ng-submit="vm.detailSubmit(form)">
+
+              <div class="row detail">
+                <div class="col-sm-2 col-xs-2">
+                  <i class="icon icon-place"></i>
+                </div>
+                <div class="col-sm-10 col-xs-10">
+                  <strong ng-show="!vm.editDetailsAllow" data-ng-bind="vm.reservation.place.name +', ' +  vm.reservation.place.admin1 +', ' +  vm.reservation.place.country"></strong>
+                    <div class="flat-select" ng-show="vm.editDetailsAllow">
+                      <select class="form-control" ng-options="place as place.name for place in vm.copyReservation.activity.places" ng-model="vm.updateDetails.place" ng-change="vm.estimate(form)">
+                      </select>
+                    </div>
+                </div>
+              </div>
+
+              <div class="row detail" ng-show="vm.reservation.participants">
+                <div class="col-sm-2 col-xs-2">
+                  <i class="icon icon-persons"></i>
+                </div>
+                <div class="col-sm-10 col-xs-10">
+                  <strong ng-show="!vm.editDetailsAllow">
+                    <span data-ng-bind="vm.reservation.participants + ' Person ' "></span>
+                  </strong>
+                    <fieldset class="flat-select" ng-show="vm.editDetailsAllow">
+                      <select class="form-control"  name="timae" ng-model="vm.updateDetails.participants" ng-change="vm.estimate(form)">
+                        <option ng-repeat="participants in vm.participantIs" value="{{participants}}">{{participants}}</option>
+                      </select>
+                    </fieldset>
+                </div>
+              </div>
+
+              <div class="row detail">
+                <div class="col-sm-2 col-xs-2">
+                  <i class="icon icon-caldendar"></i>
+                </div>
+                <div class="col-sm-10 col-xs-10">
+                  <strong ng-show="!vm.editDetailsAllow">
+                    <span data-ng-bind="vm.reservation.startDate | dateWithTime"></span>
+                    <span ng-show="vm.reservation.endDate" data-ng-bind="' To ' +(vm.reservation.endDate | dateWithTime)"></span>
+                  </strong>
+                  <div class="row" ng-show="vm.editDetailsAllow">
+                        <div class="col-sm-12 m-tb-sm date">
+                          <div class="form-group date-picker n-m">
+                            <input type="text" class="form-control small-input"
+                                   uib-datepicker-popup="dd-MM-yyyy"
+                                   ng-model="vm.startDate.date"
+                                   is-open="vm.openedStartDate"
+                                   min-date="vm.currentDate"
+                                   placeholder="Select Date"
+                                   datepicker-options="dateOptions"
+                                   date-disabled="disabled(date, mode)"
+                                   ng-focus="vm.startDateOPen()"
+                                   ng-required="true"
+                                   close-text="Close"
+                                   ng-change="vm.estimate(form)"
+                                   alt-input-formats="false"/>
+                            <button class="date-picker-btn" ng-click="vm.startDateOPen()">
+                              <i class="icon-caldendar calender"></i>
+                              <i class="icon-dropdown drop-arrow"></i>
+                            </button>
+                          </div>
+                        </div>
+                        <div class="col-sm-6 m-tb-sm time">
+                          <div class="flat-select" ng-class="{'has-error' :vm.startDate.hr == 'HH' && vm.submitted}">
+                            <select class="form-control"  name="start-hr"  ng-model="vm.startDate.hr" ng-change="vm.estimate(form)">
+                              <option ng-repeat="hr in vm.hr" value="{{hr}}">{{hr}}</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="col-sm-6 m-tb-sm time">
+                          <div class="flat-select" ng-class="{'has-error' :vm.startDate.min == 'MM' && vm.submitted}">
+                            <select class="form-control"  name="start-min"  ng-model="vm.startDate.min" ng-change="vm.estimate(form)">
+                              <option ng-repeat="min in vm.min" value="{{min}}">{{min}}</option>
+                            </select>
+                          </div>
+                        </div>
+
+                        <div class="col-sm-12 m-tb-sm" ng-show="vm.reservation.activity.duration.type ==  'VARIABLE'">
+                          <div class="text-center n-p n-m" data-ng-bind="'To' | translate"></div>
+                        </div>
+
+                        <div class="col-sm-12 m-tb-sm  date">
+                          <div class="form-group date-picker n-m" ng-class="{'has-error' : form.endDate.$error.required && vm.submitted}">
+                            <input type="text" class="form-control small-input"
+                                   uib-datepicker-popup="dd-MM-yyyy"
+                                   ng-model="vm.endDate.date"
+                                   is-open="vm.openedEndDate"
+                                   min-date="vm.startDate.date"
+                                   placeholder="Select Date"
+                                   datepicker-options="dateOptions"
+                                   date-disabled="disabled(date, mode)"
+                                   ng-focus="vm.endDateOPen()"
+                                   ng-required="vm.reservation.activity.duration.type ==  'VARIABLE'"
+                                   close-text="Close"
+                                   name="endDate"
+                                   ng-change="vm.estimate(form)"
+                                   alt-input-formats="false" />
+                            <button class="date-picker-btn" ng-click="vm.endDateOPen()">
+                              <i class="icon-caldendar calender"></i>
+                              <i class="icon-dropdown drop-arrow"></i>
+                            </button>
+                          </div>
+                        </div>
+                        <div class="col-sm-6 m-tb-sm time">
+                          <div class="flat-select" ng-class="{'has-error' :vm.endDate.hr == 'HH' && vm.submitted}">
+                            <select class="form-control"  name="start-hr"  ng-model="vm.endDate.hr" ng-change="vm.estimate(form)">
+                              <option ng-repeat="hr in vm.hr" value="{{hr}}">{{hr}}</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="col-sm-6 m-tb-sm time">
+                          <div class="flat-select" ng-class="{'has-error' :vm.endDate.min == 'MM' && vm.submitted}">
+                            <select class="form-control"  name="start-min"  ng-model="vm.endDate.min" ng-change="vm.estimate(form)">
+                              <option ng-repeat="min in vm.min" value="{{min}}">{{min}}</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+              </div>
+
+              <div class="row text-center" ng-show="!vm.editDetailsAllow" ng-if="vm.reservation.part == 'REQUESTER'&& vm.reservation.status != 'REQUEST_COMPLETED' && vm.reservation.status != 'REQUEST_CANCELED' && vm.reservation.status != 'REQUEST_REJECTED' " >
+                <div class="col-sm-12">
+                  <button type="button" class="btn primary-btn left-icon cover-btn m-tb-sm" ng-click="vm.editDetails()">
+                    <i class="icon-pencil"></i>
+                    {{'EDIT' | translate}}
+                  </button>
+                </div>
+              </div>
+
+
+              <div class="row text-center" ng-show="vm.editDetailsAllow">
+                <div class="col-sm-12">
+                  <button  class="btn success-btn left-icon cover-btn m-tb-sm">
+                    <i class="icon-mail-submit"></i>
+                      <span>
+                        <span data-ng-bind="'SUBMIT' | translate"></span>
+                        <span class="loading" ng-if="vm.reservationUpdateLoading">
+                        <i class="glyphicon glyphicon-repeat gly-spin"></i>
+                      </span>
+                      </span>
+                  </button>
+                  <button type="button" class="btn danger-btn left-icon cover-btn m-tb-sm" ng-click="vm.editDetailsAllow = false">
+                    <i class="icon-cancel"></i>
+                    <span data-ng-bind="'CANCEL' | translate"></span>
+                  </button>
+                </div>
+              </div>
+            </form>
+
+          </div>
+          <!-- WIDGET PRICE DETAILS -->
+          <div class="widget price-detail animated zoomIn">
+            <h3  data-ng-bind="'PRICE_DETAILS' | translate"></h3>
+            <div class="widget-detail">
+              <div class="row detail">
+                <span class="col-sm-6" data-ng-bind="('PRICE' | translate) + ' : '"></span>
+                <strong class="value col-sm-6 text-primary">
+                <!-- show default price -->
+                  <span ng-show="!vm.editPricesAllow && !vm.editDetailsAllow">
+                    <span data-ng-bind=" vm.reservation.price"></span>
+                    <span data-ng-bind=" vm.reservation.currency | currenciesFilter"></span>
+                  </span>
+                <!-- show detail edit estimate price-->
+                  <span ng-show="vm.editDetailsAllow">
+                    <span data-ng-bind="vm.price.price || vm.reservation.price"></span>
+                    <span data-ng-bind="(vm.price.currency || vm.reservation.currency )| currenciesFilter"></span>
+                  </span>
+                <!-- show detail update price-->
+                <div ng-class="{'has-error' : (form.durationtime.$error.required) &&  vm.submitted}"  ng-show="vm.editPricesAllow">
+                  <input type="number" class="form-control small-input" ng-model="vm.updatePrices.price">
+                </div>
+              </strong>
+              </div>
+              <div class="row detail">
+
+              <span class="col-sm-6" data-ng-bind="('SERVICE_FEES' | translate) + ' : '"></span>
+              <strong class="value col-sm-6 text-primary">
+                <!-- show default price -->
+                  <span ng-show="!vm.editDetailsAllow || vm.editPricesAllow">
+                   <span data-ng-bind="vm.reservation.customerFees - vm.reservation.publisherFees"></span>
+                   <span data-ng-bind=" vm.reservation.currency | currenciesFilter"></span>
+                  </span>
+                <!-- show detail edit estimate price-->
+                  <span ng-show="vm.editDetailsAllow">
+                    <span data-ng-bind="vm.price.fees || (vm.reservation.publisherFees - vm.reservation.customerFees)"></span>
+                    <span data-ng-bind="(vm.price.currency || vm.reservation.currency )| currenciesFilter"></span>
+                  </span>
+              </strong>
+
+              </div>
+              <div class="row detail">
+                <span class="col-sm-6" data-ng-bind="('TOTAL_PRICE' | translate) + ' : '"></span>
+              <strong class="value col-sm-6 text-primary">
+                <!-- show default price -->
+                  <span ng-show="!vm.editPricesAllow && !vm.editDetailsAllow">
+                    <span data-ng-bind="vm.reservation.price - vm.reservation.publisherFees + vm.reservation.customerFees"></span>
+                    <span data-ng-bind="vm.reservation.currency | currenciesFilter"></span>
+                  </span>
+                <!-- show detail edit estimate price-->
+                  <span ng-show="vm.editDetailsAllow">
+                    <span data-ng-bind="(vm.price.price + vm.price.fees) || (vm.reservation.price - vm.reservation.publisherFees + vm.reservation.customerFees)"></span>
+                    <span data-ng-bind="(vm.price.currency || vm.reservation.currency )| currenciesFilter"></span>
+                  </span>
+                <!-- show detail update price-->
+                  <span ng-show="vm.editPricesAllow">
+                    <span data-ng-bind="vm.updatePrices.price - vm.reservation.publisherFees + vm.reservation.customerFees"></span>
+                    <span data-ng-bind="vm.reservation.currency | currenciesFilter"></span>
+                  </span>
+              </strong>
+              </div>
+
+              <div class="m-tb-sm text-center" ng-show="!vm.editPricesAllow" ng-if="vm.reservation.part == 'PUBLISHER' && vm.reservation.status != 'REQUEST_COMPLETED' && vm.reservation.status != 'REQUEST_CANCELED' && vm.reservation.status != 'REQUEST_REJECTED'" >
+                <button type="button" class="btn primary-btn left-icon cover-btn" ng-click="vm.editPrices()">
+                  <i class="icon-pencil"></i>
+                  {{'EDIT' | translate}}
+                </button>
+              </div>
+
+              <div class="m-tb-sm  text-center" ng-show="vm.editPricesAllow">
+                <button  class="btn success-btn left-icon cover-btn m-tb-sm">
+                  <i class="icon-mail-submit"></i>
+                  <span>
+                    <span data-ng-bind="'SUBMIT' | translate"></span>
+                    <span class="loading" ng-if="vm.reservationUpdateLoading">
+                      <i class="glyphicon glyphicon-repeat gly-spin"></i>
+                    </span>
+                  </span>
+                </button>
+                <button type="button" class="btn danger-btn left-icon cover-btn m-tb-sm" ng-click="vm.editPricesAllow = false">
+                  <i class="icon-cancel"></i>
+                  <span data-ng-bind="'CANCEL' | translate"></span>
+                </button>
+              </div>
+
+            </div>
+          </div>
+          <!-- LINKED SERVICES -->
+          <div class="widget services animated zoomIn" ng-show="vm.flagService">
+            <h3 data-ng-bind="'LINKED_SERVICES' | translate"></h3>
+            <div class="widget-detail">
+              <div class="row m-tb-md" ng-repeat="includedService in vm.reservation.activity.includedServices" ng-if="includedService.inCharge == 'PUBLISHER' || includedService.inCharge == 'REQUESTER'">
+                <div class="col-sm-2" ng-init="vm.flagService = true">
+                  <i ng-class="includedService.inCharge == 'PUBLISHER' ? 'icon-tick text-success' : 'icon-cross text-danger' "></i>
+                </div>
+                <div class="col-sm-10">
+                  <div ng-class="includedService.inCharge == 'PUBLISHER' ? 'text-success' : 'text-danger' " data-ng-bind="includedService.service.name"></div>
+                  <p data-ng-bind="includedService.comment"></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Middle Panel -->
+        <div class="middle-panel col-md-9">
+          <div class="row heading-section">
+            <div class="col-sm-12">
+              <h3> <a ui-sref="actiloo.single-activity({id : vm.reservation.activity.id})" class="primary-heading animated zoomIn" data-ng-bind="vm.reservation.activity.name"></a></h3>
+              <!-- LABELS -->
+              <span  class="label label-warning animated zoomIn" data-ng-bind="'WAITING_FOR_CONFIRMATION' | translate"  ng-if="vm.reservation.part == 'REQUESTER' && (vm.reservation.status == 'NEW_REQUEST' || vm.reservation.status == 'REQUEST_CLIENT_MODIFIED')"></span>
+
+              <span class="label label-warning animated zoomIn" data-ng-bind="'WAITING_FOR_PAYMENT' | translate"  ng-if="vm.reservation.status == 'REQUEST_OWNER_OK'"></span>
+
+              <span  class="label label-warning animated zoomIn" data-ng-bind="'WAITING_FOR_CONFIRMATION_AND_PAYMENT' | translate" ng-if="vm.reservation.status == 'REQUEST_OWNER_MODIFIED'"></span>
+
+              <span  class="label label-danger animated zoomIn"  data-ng-bind="'CANCELED' | translate" ng-if="vm.reservation.status == 'REQUEST_CANCELED'"></span>
+
+              <span  class="label label-danger animated zoomIn"  data-ng-bind="'REJECTED' | translate" ng-if="vm.reservation.status == 'REQUEST_REJECTED'"></span>
+
+              <span  class="label label-info animated zoomIn"  data-ng-bind="'COMPLETED' | translate"  ng-if="vm.reservation.status == 'REQUEST_COMPLETED'"></span>
+
+              <span  class="label label-success animated zoomIn"  data-ng-bind="'COMFIRMED' | translate" ng-if="vm.reservation.status == 'REQUEST_OK'"></span>
+
+              <div class="rating">
+                <uib-rating ng-model="vm.reservation.activity.note"
+                            max="5"
+                            readonly="true"
+                            on-hover="vm.hoveringOver(value)"
+                            on-leave="overStar = null"
+                            titles="['1','2','3']"
+                            state-on="'icon-star'"
+                            state-off="'icon-star-o'"
+                            aria-labelledby="default-rating">
+                </uib-rating>
+              </div>
+            </div>
+          </div>
+
+          <p class="description animated zoomIn" data-ng-bind="vm.reservation.activity.desc"></p>
+
+          <!-- BUTTONS -->
+          <div class="buttons animated zoomIn">
+            <button type="button" class="btn primary-btn left-icon cover-btn" ng-click="vm.confirmed()" ng-if="(vm.reservation.status == 'REQUEST_CLIENT_OK' || vm.reservation.status == 'NEW_REQUEST') && vm.reservation.part == 'PUBLISHER'">
+              <i class="icon-tick"></i>
+              <span>
+                <span data-ng-bind="'CONFIRM' | translate"></span>
+                <span class="loading" ng-if="vm.confirmationLoading">
+                  <i class="glyphicon glyphicon-repeat gly-spin"></i>
+                </span>
+              </span>
+            </button>
+
+            <button type="button" class="btn success-btn left-icon cover-btn" ng-click="vm.confirmationRequest('payment')" ng-if="(vm.reservation.status == 'REQUEST_OWNER_OK' || vm.reservation.status == 'REQUEST_OWNER_MODIFIED') && vm.reservation.part == 'REQUESTER'">
+              <i class="icon-mail-submit"></i>
+              <span>
+                <span data-ng-bind="'CONFIRM_AND_PAY' | translate"></span>
+                <span class="loading" ng-if="vm.confirmationLoading">
+                  <i class="glyphicon glyphicon-repeat gly-spin"></i>
+                </span>
+              </span>
+            </button>
+
+            <button type="button" ng-click="vm.confirmationMessage('cancel')" class="btn danger-btn left-icon cover-btn"  ng-if="(vm.reservation.status == 'REQUEST_OK') || (vm.reservation.part == 'REQUESTER' && (vm.reservation.status == 'NEW_REQUEST' || vm.reservation.status == 'REQUEST_CLIENT_MODIFIED' || vm.reservation.status == 'REQUEST_OWNER_MODIFIED' || vm.reservation.status == 'REQUEST_OWNER_OK'))">
+              <i class="icon-cancel"></i>
+               <span>
+                <span data-ng-bind="'CANCEL' | translate"></span>
+                <span class="loading" ng-if="vm.canceledLoading">
+                  <i class="glyphicon glyphicon-repeat gly-spin"></i>
+                </span>
+              </span>
+            </button>
+
+            <button type="button" ng-click="vm.confirmationMessage('reject')" class="btn danger-btn left-icon cover-btn" ng-if="(vm.reservation.part == 'PUBLISHER') && (vm.reservation.status == 'NEW_REQUEST' || vm.reservation.status == 'REQUEST_CLIENT_MODIFIED' || vm.reservation.status != 'REQUEST_OWNER_MODIFIED' || vm.reservation.status != 'REQUEST_OWNER_OK')">
+              <i class="icon-cancel"></i>
+               <span>
+                <span data-ng-bind="'REJECT' | translate"></span>
+                <span class="loading" ng-if="vm.rejectLoading">
+                  <i class="glyphicon glyphicon-repeat gly-spin"></i>
+                </span>
+              </span>
+            </button>
+
+            <button type="button" ng-click="vm.invoice()" class="btn primary-btn left-icon cover-btn" ng-if="vm.reservation.part == 'REQUESTER' && vm.reservation.status == 'REQUEST_COMPLETED'">
+              <i class="icon-cancel"></i>
+               <span>
+                <span data-ng-bind="'INVOICE' | translate"></span>
+                <span class="loading" ng-if="vm.rejectLoading">
+                  <i class="glyphicon glyphicon-repeat gly-spin"></i>
+                </span>
+              </span>
+            </button>
+
+            <a ui-sref="actiloo.reviews({reservationId : vm.reservation.id})" class="btn primary-btn left-icon cover-btn" ng-if="(vm.reservation.part == 'REQUESTER' || vm.reservation.part == 'PUBLISHER') &&  (vm.reservation.status == 'REQUEST_COMPLETED') ">
+              <i class="icon-reviews"></i>
+                <span data-ng-bind="'REVIEW' | translate"></span>
+            </a>
+
+          </div>
+
+          <h3 class="primary-heading heading" data-ng-bind="'MESSAGE' | translate"></h3>
+
+          <form name="message"  class="animated zoomIn" novalidate ng-submit="vm.send(form)">
+            <fieldset class="form-group round" ng-class="{'has-error' : message.comment.$error.maxlength || message.comment.$error.required && vm.messageSubmitted }">
+              <textarea name="comment" class="form-control" ng-model="vm.text"  rows="5" placeholder="{{'Write a message to ' + vm.reservation.activity.user.firstname + ' ...'}}" ng-maxlength="1000" required></textarea>
+              <small class="text-danger" ng-if="message.comment.$error.maxlength">Meassage is too long allow 1000 characters.</small>
+            </fieldset>
+            <button class="btn success-btn left-icon cover-btn m-tb-md">
+              <i class="icon-mail-submit"></i>
+               <span>
+                <span data-ng-bind="'SEND' | translate"></span>
+                <span class="loading" ng-if="vm.sendLoading">
+                  <i class="glyphicon glyphicon-repeat gly-spin"></i>
+                </span>
+              </span>
+            </button>
+          </form>
+
+          <div class="conversation">
+            <div class="chat animated" ng-class="message.classes" ng-repeat="message in vm.reservation.messages" ng-init="vm.messageClass(message)">
+              <div class="row">
+                <div class="col-sm-2 col-xs-2 user" ng-if="vm.user.id != message.user.id" >
+                  <div class="user-image" >
+                    <img ng-src="{{message.user.avatar}}" width="55" height="55" ng-if="message.user.avatar">
+                    <i ng-if="!message.user.avatar" class="icon-user"></i>
+                  </div>
+                  <p class="name text-primary" data-ng-bind="message.user.firstname"></p>
+                  <p class="time" data-ng-bind="message.date | dateWithTime"></p>
+                </div>
+                <div class="col-sm-10 col-xs-10 message">
+                  <div class="text">
+                    <p data-ng-bind="message.text"></p>
+                  </div>
+                </div>
+                <div class="col-sm-2 col-xs-2 user" ng-if="vm.user.id == message.user.id">
+                  <div class="user-image" >
+                    <img ng-src="{{message.user.avatar}}" width="55" height="55" ng-if="message.user.avatar">
+                    <i ng-if="!message.user.avatar" class="icon-user"></i>
+                  </div>
+                  <p class="name text-primary" data-ng-bind="message.user.firstname"></p>
+                  <p class="time" data-ng-bind="message.date | dateWithTime"></p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,260 @@
+<div class="search-activities">
+  <div class="form animated" scroll-show-hide="">
+    <search-form></search-form>
+  </div>
+  <div class="container-fluid content">
+    <!-- Grid button -->
+    <div class="btn-group  grid-btn pull-right">
+      <label class="btn btn-default " ng-model="vm.view" uib-btn-radio="'list'"><i class="glyphicon glyphicon-th-list "></i></label>
+      <label class="btn btn-default" ng-model="vm.view" uib-btn-radio="'grid'"><i class="glyphicon glyphicon-th "></i></label>
+    </div>
+    <div class="row">
+      <!-- Filters -->
+
+      <!--ng-change="vm.filterActivities(category)"-->
+      <div sticky class="col-sm-12 col-md-2 filters ">
+        <div class="left-panel" ng-show="!vm.filterLoading">
+          <!-- Categories -->
+          <fieldset class="form-group" ng-show="vm.filters.categories.buckets.length">
+            <h3 class="text-center">
+              <span data-ng-bind="'CATEGORIES' | translate" ></span>
+                <span>
+                  <a href="" ng-show="vm.filters.categories.buckets.length> 4" ng-click="vm.filters.categories.expand = !vm.filters.categories.expand">
+                    <i class="text-primary pull-right" ng-class="vm.filters.categories.expand ? 'glyphicon glyphicon-minus':'glyphicon glyphicon-plus'"></i>
+                  </a>
+                </span>
+            </h3>
+            <div class="row categories" ng-repeat="category in vm.filters.categories.buckets | limitTo: vm.filters.categories.expand ? vm.filters.categories.buckets.length : 4 ">
+              <div class="col-xs-12 col-sm-3 col-md-12 check-box category">
+                <input type="checkbox" value="None" ng-model="category.select" id="{{category.key}}" ng-change="vm.filterActivities('categories' ,category)"  ng-true-value="true" ng-false-value="false"name="check" />
+                <label for="{{category.key}}">
+                  <span  data-ng-bind="(category.key | translate) + ' ('  + category.doc_count    + ')' "></span>
+                </label>
+              </div>
+            </div>
+          </fieldset>
+          <!-- Cancel Plan -->
+          <fieldset class="form-group" ng-show="vm.filters.cancelPlan.buckets.length">
+            <h3 class="text-center">
+              <span data-ng-bind="'CANCEL_PLAN' | translate"></span>
+              <span>
+                <a href="" class="read-more" ng-show="vm.filters.cancelPlan.buckets.length> 4" ng-click="vm.filters.cancelPlan.expand = !vm.filters.cancelPlan.expand">
+                  <i class="text-primary pull-right" ng-class="vm.filters.cancelPlan.expand ? 'glyphicon glyphicon-minus':'glyphicon glyphicon-plus'"></i>
+                </a>
+              </span>
+            </h3>
+            <div class="row categories" ng-repeat="cancelPlan in vm.filters.cancelPlan.buckets | limitTo: vm.filters.cancelPlan.expand ? vm.filters.cancelPlan.buckets.length : 4 ">
+              <div class="col-xs-12 col-sm-3 col-md-12 check-box category">
+                <input type="checkbox" value="None" ng-model="cancelPlan.select" id="{{cancelPlan.key}}" ng-change="vm.filterActivities('cancelPlan', cancelPlan)"  ng-true-value="true" ng-false-value="false"name="check" />
+                <label for="{{cancelPlan.key}}">
+                  <span  data-ng-bind="(cancelPlan.key | translate) + ' (' + cancelPlan.doc_count + ')'"></span>
+                </label>
+              </div>
+            </div>
+          </fieldset>
+          <!-- Languages -->
+          <fieldset class="form-group" ng-show="vm.filters.languages.buckets.length">
+            <h3 class="text-center">
+              <span data-ng-bind="'LANGUAGES' | translate"></span>
+                <span>
+                  <a href="" class="read-more" ng-show="vm.filters.languages.buckets.length> 4" ng-click="vm.filters.languages.expand = !vm.filters.languages.expand">
+                    <i class="text-primary pull-right" ng-class="vm.filters.languages.expand ? 'glyphicon glyphicon-minus':'glyphicon glyphicon-plus'"></i>
+                  </a>
+                </span>
+            </h3>
+            <div class="row categories" ng-repeat="language in vm.filters.languages.buckets | limitTo: vm.filters.languages.expand ? vm.filters.languages.buckets.length : 4 ">
+              <div class="col-xs-12 col-sm-3 col-md-12 check-box category" >
+                <input type="checkbox" value="None" ng-model="language.select" id="{{language.key}}" ng-change="vm.filterActivities('languages', language)"  ng-true-value="true" ng-false-value="false"name="check" />
+                <label for="{{language.key}}">
+                  <span  data-ng-bind="(language.key |  translate) + ' (' + language.doc_count + ')'"></span>
+                </label>
+              </div>
+            </div>
+          </fieldset>
+          <!-- Include Services-->
+          <fieldset class="form-group" ng-show="vm.filters.included.buckets.length">
+            <h3 class="text-center">
+              <span data-ng-bind="'Services' | translate" ></span>
+                <span>
+                    <a href="" ng-show="vm.filters.included.buckets.length> 4" ng-click="vm.filters.included.expand = !vm.filters.included.expand">
+                      <i class="text-primary pull-right" ng-class="vm.filters.included.expand ? 'glyphicon glyphicon-minus':'glyphicon glyphicon-plus'"></i>
+                    </a>
+                </span>
+            </h3>
+            <div class="row categories" ng-repeat="service in vm.filters.included.buckets | limitTo: vm.filters.included.expand ? vm.filters.included.buckets.length : 4 ">
+              <div class="col-xs-12 col-sm-3 col-md-12 check-box category" >
+                <input type="checkbox" value="None" ng-model="service.select" ng-change="vm.filterActivities('included', service)" id="{{service.key}}"  ng-true-value="true" ng-false-value="false"name="check" />
+                <label for="{{service.key}}">
+                  <span  data-ng-bind="(service.key | translate) + ' ('  + service.doc_count    + ')' "></span>
+                </label>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+        <div class="page-loading" ng-if="vm.filterLoading">
+          <i class="glyphicon glyphicon-repeat gly-spin"></i>
+        </div>
+      </div>
+      <!-- Search Activities-->
+      <div class="col-sm-12 col-md-10 col-md-offset-2" infinite-scroll="vm.searchActivity()" infinite-scroll-disabled="vm.busy" infinite-scroll-distance='2'>
+        <div class="row" ng-show="vm.activities.length">
+          <div  ng-class="vm.view == 'grid' ? 'col-md-4 col-sm-6 grid' : 'col-md-12 list'" ng-repeat="activity in vm.activities">
+            <div class="activity-widget row" ng-init="vm.setActivity(activity._source)">
+              <!--for cover-->
+              <div class="n-p" ng-class="vm.view == 'grid' ? 'col-md-12' : 'col-md-4'">
+                <div class="image" ng-class="cover">
+                  <a ui-sref="actiloo.single-activity({id : activity._source.id})">
+                    <img ng-src="{{activity._source.cover}}">
+                  </a>
+                  <div class="user-info"  ng-mouseover="vm.getUserInfo(activity._source.user)">
+                    <div class="user">
+                      <div class="user-image" uib-popover-template="'myPopoverTemplate.html'" popover-trigger="mouseenter" popover-placement="bottom">
+                        <img ng-src="{{activity._source.user.avatar}}" width="55" height="55" ng-if="activity._source.user.avatar">
+                        <i ng-if="!activity._source.user.avatar" class="icon-user"></i>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- user popupHover -->
+                  <script type="text/ng-template" id="myPopoverTemplate.html">
+                    <div class="user-popover" ng-show="!activity._source.user.loading">
+                      <div class="row">
+                        <div class="col-sm-4">
+                          <div class="user-image">
+                            <img ng-src="{{activity._source.user.getInfo.avatar}}" width="55" height="55" ng-if="activity._source.user.getInfo.avatar">
+                            <i ng-if="!activity._source.user.getInfo.avatar" class="icon-user"></i>
+                          </div>
+                        </div>
+                        <!--username, age, gender-->
+                        <div class="col-sm-8 user-details">
+                          <div  data-ng-bind="activity._source.user.getInfo.firstname"></div>
+                          <span  data-ng-bind="(activity._source.user.getInfo.gender == 'M') ?  ('MALE' | translate) : ('FEMALE' | translate) "></span> -
+                          <span  data-ng-bind="activity._source.user.getInfo.age"></span>
+                          <div  data-ng-bind="activity._source.user.getInfo.joined | dateFilter"></div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-xs-4 col-sm-6">
+                          <span class="key" data-ng-bind="'PONCTUALITY' | translate"></span>
+                        </div>
+                        <div class="col-xs-6 col-sm-6">
+                          <div class="rating">
+                            <uib-rating ng-model="activity._source.user.getInfo.ponctuality"
+                                        max="5"
+                                        readonly="false"
+                                        on-hover="vm.hoveringOver(value)"
+                                        on-leave="overStar = null"
+                                        titles="['1','2','3']"
+                                        state-on="'icon-star'"
+                                        state-off="'icon-star-o'"
+                                        aria-labelledby="default-rating">
+                            </uib-rating>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-xs-4 col-sm-6">
+                          <span class="key" data-ng-bind="'COMMUNICATION' | translate"></span>
+                        </div>
+                        <div class="col-xs-6 col-sm-6">
+                          <div class="rating">
+                            <uib-rating ng-model="activity._source.user.getInfo.communication"
+                                        max="5"
+                                        readonly="false"
+                                        on-hover="vm.hoveringOver(value)"
+                                        on-leave="overStar = null"
+                                        titles="['1','2','3']"
+                                        state-on="'icon-star'"
+                                        state-off="'icon-star-o'"
+                                        aria-labelledby="default-rating">
+                            </uib-rating>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-xs-4 col-sm-6">
+                          <span class="key" data-ng-bind="'FLEXIBILITY' | translate"></span>
+                        </div>
+                        <div class="col-xs-6 col-sm-6">
+                          <div class="rating">
+                            <uib-rating ng-model="activity._source.user.getInfo.flexibility"
+                                        max="5"
+                                        readonly="false"
+                                        on-hover="vm.hoveringOver(value)"
+                                        on-leave="overStar = null"
+                                        titles="['1','2','3']"
+                                        state-on="'icon-star'"
+                                        state-off="'icon-star-o'"
+                                        aria-labelledby="default-rating">
+                            </uib-rating>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="page-loading" ng-show="activity._source.user.loading">
+                      <i class="glyphicon glyphicon-repeat gly-spin"></i>
+                    </div>
+                  </script>
+                  <!-- Labels -->
+                  <div class="content-label">
+                    <div class="pull-right m-b-sm">
+                      <div class="default-label">
+                        <span class="text-lowercase" data-ng-bind="activity._source.priceDetails.price"></span>
+                        <span data-ng-bind="activity._source.priceDetails.currency | currenciesFilter "></span>
+                        <span class="text-lowercase" data-ng-bind="'/'+ activity._source.priceDetails.frequency" ng-hide="activity._source.priceDetails.frequency == 'PACKAGE'"></span>
+                        <span class="text-lowercase" data-ng-bind="'/'+ (activity._source.priceDetails.unit | priceUnit)"></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- for details -->
+              <div ng-class="vm.view == 'grid' ? 'col-md-12' : 'col-md-8'" class="n-p">
+                <div class="details">
+                  <a  ui-sref="actiloo.single-activity({id : activity._source.id})" class="primary-heading" data-ng-bind="activity._source.activityInfo.title"></a>
+                  <div class="rating">
+                    <div class="pull-left">
+                      <uib-rating ng-model="activity._source.note"
+                                  max="5"
+                                  readonly="true"
+                                  on-hover="vm.hoveringOver(value)"
+                                  on-leave="overStar = null"
+                                  titles="['1','2','3']"
+                                  state-on="'icon-star'"
+                                  state-off="'icon-star-o'"
+                                  aria-labelledby="default-rating">
+                      </uib-rating>
+                    </div>
+                  </div>
+                  <p ng-show="activity._source.activityInfo.text">
+                    <span data-ng-bind="activity._source.activityInfo.text | limitTo : vm.view == 'grid' ? 75 : 300"></span>
+                    <a ui-sref="actiloo.single-activity({id : activity._source.id})"class="read-more" ng-if="(activity._source.activityInfo.text.length > 75  && vm.view == 'grid') || (activity._source.activityInfo.text.length > 300  && vm.view != 'grid')" data-ng-bind="('READ_MORE' | translate) + '...'"></a>
+                  </p>
+                  <div class="row">
+                    <div class="col-md-7 location">
+                      <i class="icon-place"></i>
+                      <span>
+                        <span data-ng-bind="activity._source.placeIs | limitTo : 23"></span>
+                        <span class="read-more" ng-if="activity._source.place.placeIs > 23"> ...</span>
+                      </span>
+                    </div>
+                    <div class="col-md-5 person text-right" ng-show="activity._source.minParticipants">
+                      <i class="icon-persons"></i>
+                      <span ng-show="activity._source.minParticipants == activity._source.maxParticipants" data-ng-bind="activity._source.minParticipants + ' Person '"></span>
+                      <span ng-show="activity._source.minParticipants != activity._source.maxParticipants" data-ng-bind="activity._source.minParticipants + ' - ' + activity._source.maxParticipants + ' Persons '"></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--Loading Activities-->
+        <div ng-class="{'filter-loading': vm.filterActivityLoading}" ng-if="vm.loading || vm.filterActivityLoading">
+          <div class="page-loading">
+            <i class="glyphicon glyphicon-repeat gly-spin"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

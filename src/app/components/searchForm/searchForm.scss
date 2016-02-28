@@ -1,0 +1,52 @@
+.search-form{
+  width: 100%;
+  min-height: 60px;
+  background: rgba(51, 51, 51, 0.85);
+  padding: 15px 0;
+  text-align: center;
+
+  form{
+    .round{
+      margin: 0;
+      i.place,
+      i.search{
+        position: absolute;
+        top: 8px;
+        font-size: 15px;
+      }
+      i.place {
+        left: 26px;
+      }
+      i.search {
+        left: 12px;
+      }
+      input{
+        height: 30px;
+        padding-left: 30px ;
+      }
+      .tags-input .tags{
+        min-height: 28px;
+        padding: 0 6px 0 30px ;
+        input{
+          margin: 0;
+          height: 28px;
+        }
+        .tag-list{
+          li{
+            margin-top: 2px !important;
+          }
+        }
+      }
+      .select{
+        i{
+          top: 12px !important;
+          color: $color-code-9 !important;
+        }
+      }
+    }
+    button{
+      line-height: 26px;
+      height: 30px;
+    }
+  }
+}

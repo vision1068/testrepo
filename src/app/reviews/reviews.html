@@ -1,0 +1,223 @@
+<div class="container reviews">
+  <div class="row">
+    <div class="col-md-12">
+      <!--Heading-->
+      <div class="row">
+        <div class="col-md-12">
+          <h3 class="primary-heading heading" data-ng-bind="'REVIEWS' | translate"></h3>
+        </div>
+      </div>
+      <!-- REVIEWS -->
+      <form  name="form" ng-submit="vm.submit(form)" novalidate ng-if="!vm.loading">
+        <div class="info">
+          <div class="row">
+            <div class="col-sm-12">
+              <h3 class="primary-heading" data-ng-bind="(vm.reviews.part == 'REQUESTER' ? vm.reviews.activity.user.firstname : vm.reviews.user.firstname) + ' :'"></h3>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-2">
+              <div class="user-image" >
+                <img ng-src="{{vm.reviews.activity.user.avatar}}" width="55" height="55" ng-if="vm.reviews.activity.user.avatar">
+                <i ng-if="!vm.reviews.activity.user.avatar" class="icon-user"></i>
+              </div>
+            </div>
+            <div class="col-sm-10">
+              <div class="row m-b-md">
+                <div class="col-xs-4 col-sm-3">
+                  <span class="key" data-ng-bind="'PONCTUALITY' | translate"></span>
+                </div>
+                <div class="rating col-xs-6 col-sm-6">
+                  <uib-rating ng-model="vm.payload.user.ponctuality"
+                              max="5"
+                              readonly="false"
+                              on-hover="vm.hoveringOver(value)"
+                              on-leave="overStar = null"
+                              titles="['1','2','3']"
+                              state-on="'icon-star'"
+                              state-off="'icon-star-o'"
+                              aria-labelledby="default-rating">
+                  </uib-rating>
+                </div>
+              </div>
+              <div class="row m-b-md">
+                <div class="col-xs-4 col-sm-3">
+                  <span class="key" data-ng-bind="'COMMUNICATION' | translate"></span>
+                </div>
+                <div class="rating col-xs-6 col-sm-6">
+                  <uib-rating ng-model="vm.payload.user.communication"
+                              max="5"
+                              readonly="false"
+                              on-hover="vm.hoveringOver(value)"
+                              on-leave="overStar = null"
+                              titles="['1','2','3']"
+                              state-on="'icon-star'"
+                              state-off="'icon-star-o'"
+                              aria-labelledby="default-rating">
+                  </uib-rating>
+                </div>
+              </div>
+              <div class="row m-b-md">
+                <div class="col-xs-4 col-sm-3">
+                  <span class="key" data-ng-bind="'FLEXIBILITY' | translate"></span>
+                </div>
+                <div class="rating col-xs-6 col-sm-6">
+                  <uib-rating ng-model="vm.payload.user.flexibility"
+                              max="5"
+                              readonly="false"
+                              on-hover="vm.hoveringOver(value)"
+                              on-leave="overStar = null"
+                              titles="['1','2','3']"
+                              state-on="'icon-star'"
+                              state-off="'icon-star-o'"
+                              aria-labelledby="default-rating">
+                  </uib-rating>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row m-tb-md">
+            <div class="col-xs-12 col-sm-12">
+              <fieldset class="form-group round" ng-class="{'has-error' : (form.comments.$error.maxlength || form.comment.$error.minlength || form.comment.$error.required)  && vm.submitted }">
+                <textarea name="comments" class="form-control" ng-model="vm.payload.user.comment"  rows="5" placeholder="{{('ADD_A_COMMENT' | translate) + (vm.reviews.part == 'REQUESTER' ? vm.reviews.activity.user.firstname : vm.reviews.user.firstname) + ' ...'}}" ng-maxlength="1000" ng-minlength="20" required></textarea>
+                <small class="text-danger" ng-if="form.comments.$error.maxlength">Meassage is too long allow 1000 characters.</small>
+                <small class="text-danger" ng-if="form.comments.$error.minlength">Meassage must be 20 characters.</small>
+              </fieldset>
+            </div>
+          </div>
+        </div>
+        <div class="info" ng-if="vm.reviews.part == 'REQUESTER'" >
+          <div class="row">
+            <div class="col-sm-12">
+              <h3 class="primary-heading" >
+                <span data-ng-bind="('ABOUT_THE_ACTIVITY' | translate)"></span>
+                <a class="text-primary" ui-sref="actiloo.single-activity({id : vm.reviews.activity.id})" data-ng-bind="vm.reviews.activity.name + ' : '"></a>
+              </h3>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-2">
+              <div class="user-image" >
+                <img ng-src="{{vm.reviews.activity.user.avatar}}" width="55" height="55" ng-if="vm.reviews.activity.user.avatar">
+                <i ng-if="!vm.reviews.activity.user.avatar" class="icon-user"></i>
+              </div>
+            </div>
+            <div class="col-sm-10">
+              <div class="row m-b-md">
+                <div class="col-xs-4 col-sm-3">
+                  <span class="key" data-ng-bind="'ACCURACY' | translate"></span>
+                </div>
+                <div class="rating col-xs-6 col-sm-6">
+                  <uib-rating ng-model="vm.payload.activity.accuracy"
+                              max="5"
+                              readonly="false"
+                              on-hover="vm.hoveringOver(value)"
+                              on-leave="overStar = null"
+                              titles="['1','2','3']"
+                              state-on="'icon-star'"
+                              state-off="'icon-star-o'"
+                              aria-labelledby="default-rating">
+                  </uib-rating>
+                </div>
+              </div>
+              <div class="row m-b-md">
+                <div class="col-xs-4 col-sm-3">
+                  <span class="key" data-ng-bind="'QUALITY_OF_SERVICE' | translate"></span>
+                </div>
+                <div class="rating col-xs-6 col-sm-6">
+                  <uib-rating ng-model="vm.payload.activity.qos"
+                              max="5"
+                              readonly="false"
+                              on-hover="vm.hoveringOver(value)"
+                              on-leave="overStar = null"
+                              titles="['1','2','3']"
+                              state-on="'icon-star'"
+                              state-off="'icon-star-o'"
+                              aria-labelledby="default-rating">
+                  </uib-rating>
+                </div>
+              </div>
+              <div class="row m-b-md">
+                <div class="col-xs-4 col-sm-3">
+                  <span class="key" data-ng-bind="'VALUE' | translate"></span>
+                </div>
+                <div class="rating col-xs-6 col-sm-6">
+                  <uib-rating ng-model="vm.payload.activity.value"
+                              max="5"
+                              readonly="false"
+                              on-hover="vm.hoveringOver(value)"
+                              on-leave="overStar = null"
+                              titles="['1','2','3']"
+                              state-on="'icon-star'"
+                              state-off="'icon-star-o'"
+                              aria-labelledby="default-rating">
+                  </uib-rating>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row m-tb-md">
+            <div class="col-xs-12 col-sm-12">
+              <fieldset class="form-group round" ng-class="{'has-error' : (form.comment.$error.maxlength || form.comment.$error.minlength || form.comment.$error.required) && vm.submitted }">
+                <textarea name="comment2" class="form-control" ng-model="vm.payload.activity.comment"  rows="5" placeholder="{{('ADD_A_COMMENT_ABOUT_THE ACTIVITY' | translate ) +  '...'}}" ng-maxlength="1000" ng-minlength="20" required></textarea>
+                <small class="text-danger" ng-if="form.comment.$error.maxlength">Meassage is too long allow 1000 characters.</small>
+                <small class="text-danger" ng-if="form.comment.$error.minlength">Meassage must be 20 characters.</small>
+              </fieldset>
+            </div>
+          </div>
+          <!--Upload images-->
+          <div class="row m-b-md">
+            <div class="col-sm-12" ng-show="vm.files.length">
+              <div class="row">
+                <div class="col-sm-2 upload-image text-center" ng-repeat="file in vm.files">
+                  <div class="picture" ng-if="!file.fileName">
+                    <i class="glyphicon glyphicon-picture text-primary"></i>
+                    <uib-progressbar class="p-bar progress-striped active" value="file.progress" type="info"></uib-progressbar>
+                  </div>
+                  <div class="image" ng-if="file.fileName">
+                    <i class="icon-cancel text-danger" title="remove" ng-click="vm.removeImage($index)"></i>
+                    <img ng-src="{{file.fileName}}" alt="{{file.name}}">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--Upload button-->
+          <div class="row m-b-md">
+            <div class="col-sm-12" ng-show="vm.files.length < 5">
+              <div class="btn primary-btn upload-btn left-icon m-td-md">
+              <span>
+                <i class="icon-camera"></i>
+                <span data-ng-bind="'ADD_PHOTOS' | translate"></span>
+                <span ng-show="vm.uploadLoading">
+                  <i class="glyphicon glyphicon-repeat gly-spin"></i>
+                </span>
+              </span>
+                <input type="file" ngf-select="vm.upload($files, $invalidFiles)" multiple accept="image/*"/>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- SEND BUTTON -->
+        <div class="row m-b-md">
+          <div class="col-sm-12">
+            <button class="btn success-btn left-icon cover-btn m-tb-md pull-right">
+              <i class="icon-mail-submit"></i>
+               <span>
+                <span data-ng-bind="'SEND' | translate"></span>
+                <span class="loading" ng-if="vm.submitLoading">
+                  <i class="glyphicon glyphicon-repeat gly-spin"></i>
+                </span>
+              </span>
+            </button>
+          </div>
+        </div>
+      </form>
+      <!-- Loading -->
+      <div class="page-loading" ng-if="vm.loading">
+        <i class="glyphicon glyphicon-repeat gly-spin"></i>
+      </div>
+
+    </div>
+  </div>
+</div>

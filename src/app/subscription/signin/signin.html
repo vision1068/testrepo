@@ -1,0 +1,20 @@
+<form name="form" ng-submit="vm.signIn(form)" novalidate>
+  <fieldset class="form-group round" ng-class="{'has-error' : (form.email.$error.required) &&  vm.submitted}">
+    <input type="text" class="form-control"  name="email" placeholder="Email" ng-model="vm.email" required>
+  </fieldset>
+  <fieldset class="form-group round" ng-class="{'has-error' : (form.password.$error.required) &&  vm.submitted}">
+    <input type="password" class="form-control" name="password"  placeholder="Password" ng-model="vm.password" required>
+  </fieldset>
+  <fieldset class="form-group">
+    <input type="checkbox" value="None" id="remember" ng-model="vm.rememberMe" name="check" ng-true-value="true" ng-false-value="false" />
+    <label for="remember"> Remember me</label>
+    <a class="pull-right forgot-link" >Forgot Password ?</a>
+  </fieldset>
+  <fieldset>
+    <button type="submit" class="btn primary-btn pull-right" ng-disabled="vm.loading">Login
+       <span ng-if="vm.loading">
+          <i class="glyphicon glyphicon-repeat gly-spin"></i>
+        </span>
+    </button>
+  </fieldset>
+</form>

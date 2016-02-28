@@ -1,0 +1,392 @@
+<div class="new-activities">
+  <!--upload cover-->
+  <div class="upload" ng-style="{'background-image': vm.coverIs}">
+    <div class="text-center">
+      <div class="icon" ng-hide="vm.editPage"><i class="icon-camera"></i></div>
+      <div class="btn primary-btn upload-btn" ng-class="{'error-btn has-error' : !vm.payload.cover &&  vm.submitted, 'change-cover': vm.editPage}">
+        <span>
+          <span data-ng-bind="vm.editPage ? ('CHANGE_COVER' | translate) : ('UPLOAD_A_COVER_PHOTO' | translate)"></span>
+           <span ng-show="vm.uploadLoading">
+             <i class="glyphicon glyphicon-repeat gly-spin"></i>
+           </span>
+        </span>
+        <input type="file" ngf-select="vm.upload($file)" />
+      </div>
+    </div>
+  </div>
+
+  <!--form-->
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="row">
+          <form name="form" ng-submit="vm.submit(form)" novalidate>
+
+            <!-- GENERAL INFORMATION -->
+            <h3 class="primary-heading" data-ng-bind="'GENERAL_INFORMATION' | translate"></h3>
+
+            <fieldset class="form-group">
+              <div class="row">
+                <div class="col-sm-2 input-label">
+                  <label data-ng-bind="'LANGUAGES' | translate"></label>
+                </div>
+                <div class="col-sm-10">
+                  <div class="select " ng-class="{'has-error' : !vm.languages.length  &&  vm.submitted}">
+                    <input-auto-complete
+                      placeholder="{{'SELECT_LANGUAGES' | translate}}"
+                      max="5"
+                      only="true"
+                      display="name"
+                      tags-array="vm.languages"
+                      add="vm.addLanguage()"
+                      remove="vm.removeLanguage()"
+                      change = "vm.change"
+                      conditions="{{vm.autocompletelanguages}}">
+                    </input-auto-complete>
+                  </div>
+                </div>
+              </div>
+            </fieldset>
+
+            <fieldset class="form-group" ng-if="vm.languages.length">
+              <uib-tabset class="tabset">
+                <uib-tab heading="{{language.name}}" ng-repeat="language in vm.languages" >
+                  <div class="template">
+                    <fieldset class="form-group round" ng-class="{'has-error' : (form.title{{$index}}.$error.required) &&  vm.submitted}">
+                      <div class="row">
+                        <div class="col-sm-2 input-label">
+                          <label data-ng-bind="'TITLE' | translate"></label>
+                        </div>
+                        <div class="col-sm-10">
+                          <input type="text" class="form-control"  name="title{{$index}}" placeholder="{{'TITLE' | translate}}" ng-model="language.title" required>
+                        </div>
+                      </div>
+                    </fieldset>
+                    <fieldset class="form-group round" ng-class="{'has-error' : (form.description{{$index}}.$error.required) &&  vm.submitted}">
+                      <div class="row">
+                        <div class="col-sm-2 input-label">
+                          <label data-ng-bind="'DESCRIPTION' | translate"></label>
+                        </div>
+                        <div class="col-sm-10">
+                          <textarea class="form-control" name="description{{$index}}" rows="5" placeholder="{{'DESCRIPTION' | translate}}"  ng-model="language.desc" required></textarea>
+                        </div>
+                      </div>
+                    </fieldset>
+                  </div>
+                </uib-tab>
+              </uib-tabset>
+            </fieldset>
+
+            <fieldset class="form-group">
+              <div class="row">
+                <div class="col-sm-2 flat-label">
+                  <label data-ng-bind="'PARTICIPANTS' | translate"></label>
+                </div>
+                <div class="col-sm-10">
+                  <div class="row">
+                    <div class="col-sm-2 col-xs-5">
+                      <div class="flat-select">
+                        <select class="form-control"  name="min-participants"  ng-model="vm.minParticipants" ng-change="vm.setMaxParticipants()" ng-disabled="vm.applicable">
+                          <option ng-repeat="count in vm.countMin" value="{{count}}">{{count}}</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-sm-2 col-xs-2 flat-label text-center">
+                      <label data-ng-bind="'UP_TO' | translate"></label>
+                    </div>
+                    <div class="col-sm-2 col-xs-5">
+                      <div class="flat-select">
+                        <select class="form-control"  name="month"  ng-model="vm.maxParticipants" ng-disabled="vm.applicable">
+                          <option ng-repeat="count in vm.countMax" value="{{count}}">{{count}}</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-sm-6 col-xs-12 check-box">
+                      <input type="checkbox" id="applicable" name="applicable" ng-model="vm.applicable" ng-change="vm.checkApplicable(vm.applicable)" />
+                      <label for="applicable" data-ng-bind="'NOT_APPLICABLE' | translate"></label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </fieldset>
+
+            <fieldset class="form-group">
+              <div class="row">
+                <div class="col-sm-2 input-label">
+                  <label data-ng-bind="'LOCATIONS' | translate"></label>
+                </div>
+                <div class="col-sm-10">
+                  <div class="select " ng-class="{'has-error' : !vm.payload.places.length  &&  vm.submitted}">
+                    <input-auto-complete
+                      placeholder="{{'SELECT_LOCATIONS' | translate}}"
+                      max="10"
+                      only="true"
+                      display="name"
+                      tags-array="vm.payload.places"
+                      conditions="{{vm.autocompleteLocations}}">
+                    </input-auto-complete>
+                  </div>
+                </div>
+              </div>
+            </fieldset>
+
+            <fieldset class="form-group">
+              <div class="row">
+                <div class="col-sm-2 flat-label">
+                  <label data-ng-bind="'STATUS' | translate"></label>
+                </div>
+                <div class="col-sm-10">
+                  <div class="btn-group" ng-class="{'has-error' : vm.payload.status != true && vm.payload.status != false &&  vm.submitted}">
+                    <label class="btn radio-btn" ng-model="vm.payload.status" uib-btn-radio="true" data-ng-bind="'ACTIVE' | translate"></label>
+                    <label class="btn radio-btn" ng-model="vm.payload.status" uib-btn-radio="false" data-ng-bind="'INACTIVE' | translate"></label>
+                  </div>
+                </div>
+              </div>
+            </fieldset>
+
+            <fieldset class="form-group">
+              <div class="row">
+                <div class="col-sm-2 input-label">
+                  <label data-ng-bind="'TAGS' | translate"></label>
+                </div>
+                <div class="col-sm-10">
+                  <div class="select " ng-class="{'has-error' : !vm.tags.length  &&  vm.submitted}">
+                    <input-auto-complete
+                      placeholder="{{'SELECT_TAGS' | translate}}"
+                      max="10"
+                      only="false"
+                      display="text"
+                      tags-array="vm.tags"
+                      conditions="{{vm.autocompleteTags}}">
+                    </input-auto-complete>
+                  </div>
+                </div>
+              </div>
+            </fieldset>
+
+
+
+            <!-- LINKED SERVICES -->
+            <h3 class="primary-heading" data-ng-bind="'LINKED_SERVICES' | translate"></h3>
+
+            <div ng-repeat="service in vm.services ">
+              <fieldset class="form-group">
+                <div class="row">
+                  <div class="col-sm-2 input-label">
+                    <label data-ng-bind="service.name"></label>
+                  </div>
+                  <div class="col-sm-10">
+                    <div class="btn-group">
+                      <label class="btn radio-btn" ng-model="service.inCharge" uib-btn-radio="'PUBLISHER'" data-ng-bind="'IN_NY_CHARGE' | translate"></label>
+                      <label class="btn radio-btn" ng-model="service.inCharge" uib-btn-radio="'REQUESTER'" data-ng-bind="'IN_PARTICIPANT_CHARGE' | translate"></label>
+                      <label class="btn radio-btn" ng-model="service.inCharge" uib-btn-radio="'NOT_NEEDED'" data-ng-bind="'NOT_NEEDED' | translate"></label>
+                    </div>
+                  </div>
+                </div>
+              </fieldset>
+
+              <fieldset class="form-group">
+                <uib-tabset class="tabset">
+                  <uib-tab heading="{{language.name}}" ng-repeat="language in service.language">
+                    <div class="template">
+                      <textarea class="form-control" ng-model="language.text"  rows="5" placeholder="Add a comment"></textarea>
+                    </div>
+                  </uib-tab>
+                </uib-tabset>
+              </fieldset>
+            </div>
+
+            <!-- CANCEL PLANS -->
+            <h3 class="primary-heading" data-ng-bind="'CANCEL_PLANS' | translate"></h3>
+            <fieldset class="form-group">
+              <div class="row">
+              <div class="col-sm-12">
+                <div class="btn-group" ng-class="{'has-error' : !vm.payload.cancelPlan &&  vm.submitted}">
+                  <label class="btn radio-btn" ng-model="vm.payload.cancelPlan" uib-btn-radio="'VERY_FLEX'" data-ng-bind="'VERY_FLEXIBLE' | translate"></label>
+                  <label class="btn radio-btn" ng-model="vm.payload.cancelPlan" uib-btn-radio="'FLEX'" data-ng-bind="'FLEXIBLE' | translate"></label>
+                  <label class="btn radio-btn" ng-model="vm.payload.cancelPlan" uib-btn-radio="'MODERATE'" data-ng-bind="'MODERATE' | translate"></label>
+                  <label class="btn radio-btn" ng-model="vm.payload.cancelPlan" uib-btn-radio="'STRICT'" data-ng-bind="'STRICT' | translate"></label>
+                  <label class="btn radio-btn" ng-model="vm.payload.cancelPlan" uib-btn-radio="'VERY_STRICT'" data-ng-bind="'VERY_STRICT' | translate"></label>
+                  <label class="btn radio-btn" ng-model="vm.payload.cancelPlan" uib-btn-radio="'LONG'" data-ng-bind="'LONG' | translate"></label>
+                </div>
+              </div>
+            </div>
+            </fieldset>
+
+            <p data-ng-bind="'THIS_PLAN_LETS_THE_USER_CANCEL_WITHOUT_ANY_FEES_UNTIL_1_HOUR_BEFORE_THE_START_DATE' | translate"></p>
+
+
+            <!-- DURATION DETAILS -->
+            <h3 class="primary-heading" data-ng-bind="'DURATION_DETAILS' | translate"></h3>
+            <p data-ng-bind="'DEFINE_THE_DURATION_CONSTRAINTS_RELATED_TO_YOUR_ACTIVITY' | translate"></p>
+
+            <fieldset class="form-group">
+              <div class="row">
+                <div class="col-sm-12 circle-radio">
+                  <input type="radio" id="radio01" ng-change="vm.priceDetailsCheckRules()" name="radio" ng-model="vm.payload.duration.type" value="NA" />
+                  <label for="radio01"><span><span class="dot"></span></span> &nbsp; {{'NOT_APPLICABLE' | translate}}</label>
+                </div>
+              </div>
+            </fieldset>
+
+            <fieldset class="form-group circle-radio">
+              <div class="row">
+                <div class="col-sm-12">
+                  <input type="radio" id="radio02" name="radio" ng-change="vm.priceDetailsCheckRules()" ng-model="vm.payload.duration.type" value="FIXED" />
+                  <label for="radio02"><span><span class="dot"></span></span> &nbsp; {{'FIXED_DURATION' | translate}}</label>
+                </div>
+              </div>
+            </fieldset>
+
+            <fieldset class="form-group">
+              <div class="row">
+                <div class="col-sm-offset-1 col-sm-2" ng-class="{'has-error' : (form.durationtime.$error.required) &&  vm.submitted}">
+                  <input type="number" class="form-control small-input" name="durationtime" ng-model="vm.fixedMinDuration" ng-disabled="vm.payload.duration.type != 'FIXED'" ng-required="vm.payload.duration.type == 'FIXED' ">
+                </div>
+                <div class="col-sm-2">
+                  <div class="flat-select">
+                    <select class="form-control"  name="time" ng-change="vm.priceDetailsCheckRules()" ng-model="vm.fixedMinDurationUnit" ng-disabled="vm.payload.duration.type != 'FIXED'">
+                      <option ng-repeat="time in vm.times" value="{{time}}">{{time}}</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </fieldset>
+
+            <fieldset class="form-group circle-radio">
+              <div class="row">
+                <div class="col-sm-12">
+                  <input type="radio" id="radio03" name="radio" ng-change="vm.priceDetailsCheckRules()" ng-model="vm.payload.duration.type" value="VARIABLE" />
+                  <label for="radio03"><span><span class="dot"></span></span> &nbsp; {{'VARIABLE_DURATION' | translate}}</label>
+                </div>
+              </div>
+            </fieldset>
+
+            <fieldset class="form-group">
+              <div class="row">
+                <div class="col-sm-offset-1 col-sm-2" ng-class="{'has-error' : (form.variablemin.$error.required) &&  vm.submitted}">
+                  <input type="number" class="form-control small-input" name="variablemin" ng-model="vm.variableMinDuration" ng-disabled="vm.payload.duration.type != 'VARIABLE'" ng-required="vm.payload.duration.type == 'VARIABLE'">
+                </div>
+                <div class="col-sm-2">
+                  <div class="flat-select">
+                    <select class="form-control"  name="time"  ng-change="vm.priceDetailsCheckRules()" ng-model="vm.variableMinDurationUnit" ng-disabled="vm.payload.duration.type != 'VARIABLE'">
+                      <option ng-repeat="time in vm.times" value="{{time}}">{{time}}</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-sm-2 flat-label text-center">
+                  <label data-ng-bind="'UP_TO' | translate "></label>
+                </div>
+                <div class="col-sm-2" ng-class="{'has-error' : (form.variablemax.$error.required) &&  vm.submitted}">
+                  <input type="number" class="form-control small-input" name="variablemax" ng-model="vm.variableMaxDuration" ng-disabled="vm.payload.duration.type != 'VARIABLE'" ng-required="vm.payload.duration.type == 'VARIABLE'">
+                </div>
+                <div class="col-sm-2">
+                  <div class="flat-select">
+                    <select class="form-control"  name="time"  ng-change="vm.priceDetailsCheckRules()" ng-model="vm.variableMinDurationUnit" ng-disabled="vm.payload.duration.type != 'VARIABLE'">
+                      <option ng-repeat="time in vm.times" value="{{time}}">{{time}}</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </fieldset>
+
+
+            <!-- PRICE DETAILS -->
+            <h3 class="primary-heading" data-ng-bind="'PRICE_DETAILS' | translate"></h3>
+            <p data-ng-bind="'HOW_SHOULD_WE_CALCULATE_THE_PRICE' | translate"></p>
+
+            <fieldset class="form-group">
+              <div class="row">
+                <div class="col-sm-2 input-label">
+                  <label data-ng-bind="'PRICE' | translate"></label>
+                </div>
+                <div class="col-sm-10">
+                  <div class="col-sm-3" ng-class="{'has-error' : (form.price.$error.required) &&  vm.submitted}">
+                    <input type="number" name="price" class="form-control small-input" ng-model="vm.payload.priceDetails.price" required>
+                  </div>
+
+                  <div class="col-sm-2">
+                    <div class="flat-select">
+                      <select class="form-control"  name="month"  ng-model="vm.payload.priceDetails.currency">
+                        <option ng-repeat="unit in vm.currenciesUnit" value="{{unit}}">{{unit}}</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="flat-select" >
+                      <select class="form-control" ng-options="unit.id as unit.label for unit in vm.priceUnit" ng-model="vm.payload.priceDetails.unit">
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="flat-select" ng-class="{'has-error' : vm.up == 'Months'  &&  vm.submitted}">
+                      <select class="form-control" ng-options="unit.id as unit.label for unit in vm.frequencyUnit" ng-model="vm.payload.priceDetails.frequency">
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </fieldset>
+
+
+            <!-- PAYMENT MODALITY -->
+
+            <!-- TODO Comment **Payment Modality** section for the moment for Monta -->
+
+          <!--  <h3 class="primary-heading" data-ng-bind="'PAYMENT_MODALITY' | translate"></h3>
+            <p data-ng-bind="('HOW_YOU_WANT_TO_GET_PAID' | translate) + '?'"></p>
+
+            <fieldset class="form-group">
+              <div class="row">
+                <div class="col-sm-offset-2 col-sm-10">
+                  <div class="btn-group" ng-class="{'has-error' : !vm.payload.paymentModality &&  vm.submitted}">
+                    <label class="btn radio-btn" ng-model="vm.payload.paymentModality" uib-btn-radio="'AT_START'" data-ng-bind="'AT_THE_BEGINNING' | translate"></label>
+                    <label class="btn radio-btn" ng-model="vm.payload.paymentModality" uib-btn-radio="'AT_END'" data-ng-bind="'AT_THE_END' | translate"></label>
+                    <label class="btn radio-btn" ng-model="vm.payload.paymentModality" uib-btn-radio="'AT_END_OK'" data-ng-bind="'AT_THE_END_WITH_APPROVAL' | translate"></label>
+                  </div>
+                  <p class="m-tb-md" data-ng-bind="'* ' + ('YOU_GET_PAID_WHEN_THE_ACTIVITY_STARTS' | translate)" ng-show="vm.payload.paymentModality == 'AT_START'"></p>
+                  <p class="m-tb-md" data-ng-bind="'* ' + ('YOU_GET_PAID_WHEN_THE_ACTIVITY_IS_COMPLETED' | translate)" ng-show="vm.payload.paymentModality == 'AT_END'"></p>
+                  <p class="m-tb-md" data-ng-bind="'* ' + ('YOU_GET_PAID_WHEN_THE_ACTIVITY_IS_COMPLETED_WITH_THE_PARTICIPANT_CONFIRMATION' | translate)" ng-show="vm.payload.paymentModality == 'AT_END_OK'"></p>
+                </div>
+              </div>
+            </fieldset>-->
+
+
+            <!-- CATEGORIES -->
+            <h3 class="primary-heading" data-ng-bind="'CATEGORIES' | translate"></h3>
+
+            <fieldset class="form-group">
+              <div class="row categories" ng-class="{'has-error' : !vm.payload.categories.length &&  vm.submitted}">
+                <div class="col-sm-3 check-box category" ng-repeat="category in vm.categories">
+                  <input type="checkbox" value="None" ng-model="vm.categoriesSelected[$index].select" id="{{category.name}}"  ng-true-value="true" ng-false-value="false" ng-change="vm.checkedCategory(vm.categoriesSelected[$index].select, category)" name="check" />
+                  <label for="{{category.name}}" data-ng-bind="category.name"></label>
+                </div>
+              </div>
+            </fieldset>
+
+
+            <!--button-->
+            <fieldset>
+              <button type="submit" class="btn success-btn left-icon" ng-disabled="vm.loading">
+                <i class="icon-mail-submit"></i>
+                <span>
+                  <span data-ng-bind="'SUBMIT' | translate"></span>
+                  <span class="loading" ng-if="vm.loading">
+                  <i class="glyphicon glyphicon-repeat gly-spin"></i>
+                </span>
+                </span>
+
+              </button>
+              <button type="button" class="btn danger-btn left-icon">
+                <i class="icon-cancel"></i>
+                <span data-ng-bind="'CANCEL' | translate"></span>
+              </button>
+            </fieldset>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

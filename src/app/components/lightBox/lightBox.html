@@ -1,0 +1,16 @@
+<div class="modal-body">
+  <button class="close" aria-hidden="true" ng-click="$dismiss()"><i class="icon-cancel"></i></button>
+  <div class="btn-controller text-center">
+    <div class="btn-group" ng-if="Lightbox.images.length > 1">
+      <a class="btn btn-xs" ng-click="Lightbox.prevImage()"><i class="glyphicon glyphicon-arrow-left"></i></a>
+      <a class="btn btn-xs" ng-click="Lightbox.nextImage()"><i class="glyphicon glyphicon-arrow-right"></i></a>
+    </div>
+  </div>
+
+
+  <!-- image -->
+  <div class="lightbox-image-container">
+    <img lightbox-src="{{Lightbox.imageUrl}}">
+  </div>
+
+</div>

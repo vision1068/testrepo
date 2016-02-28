@@ -1,0 +1,125 @@
+/*This css file use 'My Activities' & 'My Reservations'  page*/
+
+.my-reservations,
+.my-activities{
+  .activities{
+    margin: 20px 0 80px 0;
+    > div {
+      margin-bottom: 30px;
+    }
+  }
+}
+
+/* activity-widget use 'My Activities' , 'My Reservation'  and 'Search' */
+.activity-widget{
+  background: $color-code-1;
+  border: 1px solid $color-code-2;
+  height: 400px;
+  border-radius: 25px;
+  padding: 0;
+//  overflow: hidden;
+  font-size: 13px;
+  margin: auto;
+  max-width: 450px;
+  color: $color-code-3;
+  &:hover{
+    text-decoration :none;
+  }
+  i,.read-more{
+    color: $primary;
+  }
+  .image{
+    height: 200px;
+    position: relative;
+    img{
+      width: 100%;
+      height: 100%;
+      border-top-left-radius: 25px;
+      border-top-right-radius: 25px;
+    }
+    .option{
+      height: 35px;
+      background: rgba(3, 3, 3, 0.63);
+      color: $color-code-1;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      margin: 0;
+      .link{
+        padding-right: 0;
+        a{
+          color: $color-code-1;
+          line-height: 35px;
+          &:hover{
+            text-decoration : none
+          }
+          i{
+            font-size: 18px;
+            margin-right: 5px;
+            color: $color-code-1;
+          }
+          .text{
+            position: relative;
+            top:-2px
+          }
+          .loading{
+            position: absolute;
+            margin-left: 5px;
+            i{
+              font-size: 12px;
+            }
+          }
+        }
+      }
+    }
+    .content-label{
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      .primary-label,
+      .success-label,
+      .danger-label,
+      .warning-label,
+      .info-label,
+      .default-label{
+        height: 35px;
+        line-height: 31px;
+      }
+    }
+  }
+  .details{
+    padding: 18px;
+    .rating{
+      margin: 17px 0;
+      height: 28px;
+    }
+    a.primary-heading{
+      font-size: 18px;
+    }
+    p{
+      height: 36px;
+      overflow: hidden;
+    }
+    .location{
+      i{
+        font-size: 15px;
+      }
+      span{
+        position: relative;
+        top:-1px;
+      }
+    }
+    .person{
+      i{
+        font-size: 18px;
+        position: relative;
+        top: -2px;
+      }
+      span{
+        position: relative;
+        top:-5px;
+      }
+    }
+  }
+}

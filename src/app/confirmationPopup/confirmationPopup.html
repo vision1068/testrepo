@@ -1,0 +1,27 @@
+<div class="modal-body request-book">
+  <h3 data-ng-bind="vm.data.heading "></h3>
+  <p data-ng-bind="vm.data.message"></p>
+
+  <div class="buttons">
+    <button type="button" ng-click="vm.cancel()" class="btn danger-btn left-icon cover-btn" >
+      <i class="icon-cancel"></i>
+      <span>
+        <span data-ng-bind="'NO' | translate"></span>
+        <span class="loading" ng-if="vm.canceledLoading">
+          <i class="glyphicon glyphicon-repeat gly-spin"></i>
+        </span>
+      </span>
+    </button>
+
+    <button type="button" class="btn success-btn left-icon cover-btn" ng-click="vm.yes()" >
+      <i class="icon-mail-submit"></i>
+      <span>
+        <span data-ng-bind="'YES' | translate"></span>
+        <span class="loading" ng-if="vm.loading">
+          <i class="glyphicon glyphicon-repeat gly-spin"></i>
+        </span>
+      </span>
+    </button>
+  </div>
+
+</div>

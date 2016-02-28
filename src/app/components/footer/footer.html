@@ -1,0 +1,64 @@
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12 footer">
+            <div class="row content">
+               <div class="col-sm-3 col-xs-12 col-sm-offset-2">
+                 <fieldset class="footer-select">
+                   <select class="form-control" ng-options="language.code as language.lang for language in vm.languages" ng-model="vm.language" ng-change="vm.locale()" >
+                   </select>
+                 </fieldset>
+                 <fieldset class="footer-select">
+                   <select class="form-control"  name="timae" ng-model="vm.currency" >
+                     <option ng-repeat="currency in vm.currencies" value="{{currency}}">{{currency}}</option>
+                   </select>
+                 </fieldset>
+               </div>
+              <div class="col-sm-2 col-xs-6">
+                  <h4>Company</h4>
+                <ul>
+                  <li><a>About</a></li>
+                  <li><a>Careers</a></li>
+                  <li><a>Press</a></li>
+                  <li><a>Blog</a></li>
+                  <li><a>Help</a></li>
+                  <li><a>Policies</a></li>
+                  <li><a>Policies</a></li>
+                  <li><a>Disaster Response</a></li>
+                  <li><a>Terms & Privacy</a></li>
+                </ul>
+              </div>
+              <div class="col-sm-2 col-xs-6">
+                <h4>Discover</h4>
+                <ul>
+                  <li><a>Trust & Safety</a></li>
+                  <li><a>Invite Friends</a></li>
+                  <li><a>Our Selection</a></li>
+                  <li><a>Mobile</a></li>
+                  <li><a>Site Map</a></li>
+                </ul>
+              </div>
+            </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12 text-center">
+        <div class="join">
+          <a>Join Us On</a>
+        </div>
+       <div class="footer-button">
+         <button><i class="glyphicon glyphicon-minus"></i></button>
+         <button><i class="glyphicon glyphicon-minus"></i></button>
+         <button><i class="glyphicon glyphicon-minus"></i></button>
+         <button><i class="glyphicon glyphicon-minus"></i></button>
+         <button><i class="glyphicon glyphicon-minus"></i></button>
+         <button><i class="glyphicon glyphicon-minus"></i></button>
+         <button><i class="glyphicon glyphicon-minus"></i></button>
+       </div>
+        <div class="copy-right">
+          <a>© Actiloo, Inc.</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>

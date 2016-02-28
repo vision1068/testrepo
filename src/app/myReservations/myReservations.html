@@ -1,0 +1,144 @@
+<div class="container my-reservations">
+  <div class="row">
+    <div class="col-md-12">
+      <!--Heading-->
+      <div class="row">
+        <div class="col-md-12">
+          <h3 class="primary-heading heading" data-ng-bind="'MY_RESERVATIONS' | translate"></h3>
+
+          <div class="tabs">
+            <div class="text-center">
+              <div class="btn-group" ng-class="{'has-error' : !vm.payload.cancelPlan &&  vm.submitted}">
+                <label class="btn radio-btn" ng-model="vm.tab" uib-btn-radio="'all'" data-ng-bind="'All' | translate" ng-change="vm.changeTab()"></label>
+                <label class="btn radio-btn" ng-model="vm.tab" uib-btn-radio="'pendingClient'" data-ng-bind="'WAITING_FOR_YOUR_RESPONSE' | translate" ng-change="vm.changeTab()"></label>
+                <label class="btn radio-btn" ng-model="vm.tab" uib-btn-radio="'pending'" data-ng-bind="'WAITING_FOR_CONFIRMATION' | translate" ng-change="vm.changeTab()"></label>
+                <label class="btn radio-btn" ng-model="vm.tab" uib-btn-radio="'confirmed'" data-ng-bind="'CONFIRMED' | translate" ng-change="vm.changeTab()"></label>
+                <label class="btn radio-btn" ng-model="vm.tab" uib-btn-radio="'canceled'" data-ng-bind="'CANCELED' | translate" ng-change="vm.changeTab()"></label>
+                <label class="btn radio-btn" ng-model="vm.tab" uib-btn-radio="'completed'" data-ng-bind="'COMPLETED' | translate" ng-change="vm.changeTab()"></label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!--Activities-->
+      <div infinite-scroll="vm.getReservations()" infinite-scroll-disabled="vm.busy" infinite-scroll-distance='2'>
+        <div class="row activities" ng-show="vm.reservations.length">
+          <div class="col-sm-4" ng-repeat="reservation in vm.reservations track by $index">
+            <div class="activity-widget">
+              <!-- Cover -->
+              <div class="image">
+                <a ui-sref="actiloo.single-reservation({id : reservation.id})">
+                  <img ng-src="{{reservation.activity.cover}}">
+                </a>
+                <!-- Options -->
+                <div class="row option">
+                  <div class="col-sm-3 link">
+                    <a ui-sref="actiloo.single-reservation({id : reservation.id})">
+                      <i class="icon-details"></i>
+                      <span class="text" data-ng-bind="'DETAILS' | translate"></span>
+                    </a>
+                  </div>
+                  <div class="col-sm-3 link" ng-if="reservation.status != 'REQUEST_CANCELED' && reservation.status != 'REQUEST_COMPLETED'">
+                    <a  href="" >
+                      <i class="icon-pencil"></i>
+                      <span class="text" data-ng-bind="'EDIT' | translate"></span>
+                    </a>
+                  </div>
+                 <!-- <div class="col-sm-5 link" ng-if="reservation.status != 'REQUEST_CANCELED' && reservation.status != 'REQUEST_COMPLETED' && reservation.status != 'CONFIRMED'">
+                    <a href="">
+                      <i class="icon-question-mark"></i>
+                      <span class="text"> Confirm/Cancel</span>
+                    </a>
+                  </div>-->
+                  <div class="col-sm-3 link" ng-if="reservation.status == 'REQUEST_COMPLETED'">
+                    <a href="">
+                      <i class="icon-invoice"></i>
+                      <span class="text" data-ng-bind="'INVOICE' | translate"></span>
+                    </a>
+                  </div>
+
+                </div>
+                <!-- Labels -->
+                <div class="content-label">
+                  <div class="pull-right m-b-sm">
+                    <div class="default-label">
+                      <span data-ng-bind="reservation.price - reservation.publisherFees + reservation.customerFees"></span>
+                      <span data-ng-bind="reservation.currency | currenciesFilter "></span>
+                    </div>
+                  </div>
+
+                  <div class="text-capitalize">
+                    <div ng-class="{'info-label' : (reservation.status == 'REQUEST_COMPLETED' ),
+                                  'danger-label' : (reservation.status == 'REQUEST_CANCELED' || reservation.status == 'REQUEST_REJECTED'),
+                                  'success-label' : (reservation.status == 'REQUEST_OK' ||reservation.status == 'CONFIRMED'),
+                                  'warning-label' : (reservation.status == 'REQUEST_CLIENT_MODIFIED' || reservation.status == 'REQUEST_OWNER_MODIFIED' || reservation.status == 'REQUEST_OWNER_OK' || reservation.status == 'NEW_REQUEST' ) }">
+                      <span data-ng-bind="(reservation.status | statusFilter) | lowercase "></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Details -->
+              <div class="details">
+                <div class="rating">
+                  <div class="pull-right">
+                    <uib-rating ng-model="reservation.activity.note"
+                                max="5"
+                                readonly="true"
+                                on-hover="vm.hoveringOver(value)"
+                                on-leave="overStar = null"
+                                titles="['1','2','3']"
+                                state-on="'icon-star'"
+                                state-off="'icon-star-o'"
+                                aria-labelledby="default-rating">
+                    </uib-rating>
+                  </div>
+                </div>
+                <a ui-sref="actiloo.single-reservation({id : reservation.id})"  class="primary-heading" data-ng-bind="reservation.activity.name"></a>
+                <p>
+                  <span data-ng-bind="reservation.activity.desc | limitTo : 75"></span>
+                  <a ui-sref="actiloo.single-reservation({id : reservation.id})"  class="read-more" ng-if="reservation.activity.desc.length > 75" data-ng-bind="('READ_MORE' | translate) + '...'"></a>
+                </p>
+
+                <div class="row">
+                  <div class="col-md-7 location">
+                    <i class="icon-place"></i>
+                    <span>
+                      <span data-ng-bind="reservation.place.name | limitTo : 23"></span>
+                      <span class="read-more" ng-if="reservation.place.name.length > 23"> ...</span>
+                    </span>
+                  </div>
+                  <div class="col-md-5 person text-right" ng-hide="!reservation.participants">
+                    <i class="icon-persons"></i>
+                    <span ng-show="reservation.participants" data-ng-bind="reservation.participants + ' Person ' "></span>
+                  </div>
+                </div>
+
+                <div class="row date">
+                  <div class="col-md-12">
+                    <i class="icon-caldendar"></i>
+                <span>
+                  <span  ng-if="reservation.startDate" data-ng-bind="reservation.startDate | dateWithTime"></span>
+                  <span  ng-if="reservation.endDate" data-ng-bind="'To ' +(reservation.endDate | dateWithTime)"></span>
+                </span>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div ng-if="!vm.loading && !vm.reservations.length">
+          <p>No Reservation</p>
+        </div>
+
+      </div>
+
+      <div class="page-loading" ng-show="vm.loading">
+        <i class="glyphicon glyphicon-repeat gly-spin"></i>
+      </div>
+
+    </div>
+  </div>
+</div>

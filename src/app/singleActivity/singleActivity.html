@@ -1,0 +1,400 @@
+<div class="single-activity">
+
+  <div class="page-loading" ng-if="vm.loading1 ||  vm.loading2">
+    <i class="glyphicon glyphicon-repeat gly-spin"></i>
+  </div>
+
+  <div ng-if="!vm.loading1 &&  !vm.loading2">
+  <!-- cover-->
+  <div class="cover" ng-style="{'background-image': vm.coverIs}">
+    <div class="container">
+      <div class="pic" ng-if="vm.activities.user.avatar">
+        <img ng-src="{{vm.activities.user.avatar}}" width="150" height="150">
+      </div>
+      <i ng-if="!vm.activities.user.avatar" class="icon-user user"></i>
+    </div>
+  </div>
+
+  <!-- Detail -->
+  <div class="container activity-details">
+    <div class="row">
+
+      <!-- Left Panel -->
+      <div class="col-md-3 left-panel">
+        <div class="widget animated zoomIn">
+          <h3 data-ng-bind="vm.activities.user.firstname"></h3>
+          <div class="widget-detail">
+            <p>
+              <span data-ng-bind="('AGE' | translate) + ' : '"></span>
+              <strong data-ng-bind="vm.activities.user.age"></strong>
+            </p>
+            <p>
+              <span data-ng-bind="('GENDER' | translate) + ' : '"></span>
+              <strong data-ng-bind="(vm.activities.user.gender == 'M') ? ('MALE' | translate) : ('FEMALE' | translate) "></strong>
+            </p>
+            <p>
+              <span data-ng-bind="('SPOKEN_LANGUAGES' | translate) + ' : '"></span>
+              <strong ng-repeat="language in vm.activities.languages">
+                <span data-ng-bind="language.name"></span>
+                <span ng-if="vm.activities.languages.length > 1 && $index != vm.activities.languages.length-1">, </span>
+              </strong>
+            </p>
+          </div>
+        </div>
+        <div class="widget details animated zoomIn">
+          <h3 data-ng-bind="'DETAILS' | translate"></h3>
+          <div class="widget-detail">
+            <div class="row m-tb-md" ng-hide="!vm.activities.minParticipants && !vm.activities.maxParticipants">
+              <div class="col-sm-2">
+                <i class="icon icon-persons"></i>
+              </div>
+              <div class="col-sm-10">
+                <strong ng-show="vm.activities.minParticipants == vm.activities.maxParticipants" data-ng-bind="vm.activities.minParticipants + ' Person ' "></strong>
+                <strong ng-show="vm.activities.minParticipants != vm.activities.maxParticipants" data-ng-bind="vm.activities.minParticipants + ' - ' + vm.activities.maxParticipants + ' Person ' "></strong>
+              </div>
+            </div>
+            <div class="row m-tb-md">
+              <div class="col-sm-2">
+                <i class="icon icon-place"></i>
+              </div>
+              <div class="col-sm-10">
+                <strong ng-repeat="place in vm.activities.places">
+                  <span data-ng-bind="place.name"></span>
+                  <span ng-if="vm.activities.places.length > 1 && $index != vm.activities.places.length-1">, </span>
+                </strong>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="widget services animated zoomIn" ng-show="vm.flagService">
+          <h3 data-ng-bind="'LINKED_SERVICES' | translate"></h3>
+          <div class="widget-detail">
+            <div class="row m-tb-md" ng-repeat="includedService in vm.activities.includedServices" ng-if="includedService.inCharge == 'PUBLISHER' || includedService.inCharge == 'REQUESTER'">
+              <div class="col-sm-2" ng-init="vm.flagService = true">
+                <i ng-class="includedService.inCharge == 'PUBLISHER' ? 'icon-tick text-success' : 'icon-cross text-danger' "></i>
+              </div>
+              <div class="col-sm-10">
+                <div ng-class="includedService.inCharge == 'PUBLISHER' ? 'text-success' : 'text-danger'" data-ng-bind="includedService.service.name"></div>
+                <p data-ng-bind="includedService.comment"></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Middle Panel -->
+      <div class="middle-panel" ng-class="vm.activities.owner ? 'col-md-9' : 'col-md-6'">
+        <div class="row heading-section">
+          <div class="col-sm-8">
+            <h3 class="primary-heading animated zoomIn" data-ng-bind="vm.activities.name"></h3>
+            <div class="rating">
+              <uib-rating ng-model="vm.activities.note"
+                          max="5"
+                          readonly="true"
+                          on-hover="vm.hoveringOver(value)"
+                          on-leave="overStar = null"
+                          titles="['1','2','3']"
+                          state-on="'icon-star'"
+                          state-off="'icon-star-o'"
+                          aria-labelledby="default-rating">
+              </uib-rating>
+            </div>
+          </div>
+          <div class="col-sm-4 n-p">
+            <button class="btn default-btn cover-btn pull-right ">
+              <span class="text-lowercase" data-ng-bind="vm.activities.priceDetails.price"></span>
+              <span data-ng-bind="vm.activities.priceDetails.currency | currenciesFilter "></span>
+              <span class="text-lowercase" data-ng-bind="'/'+ vm.activities.priceDetails.frequency" ng-hide="vm.activities.priceDetails.frequency == 'PACKAGE'"></span>
+              <span class="text-lowercase" data-ng-bind="(vm.activities.priceDetails.unit == 'PER_PERSON')? '/person' : '/reservation'"></span>
+            </button>
+          </div>
+        </div>
+        <p class="description animated zoomIn" data-ng-bind="vm.activities.desc"></p>
+
+        <div class="buttons animated zoomIn" ng-hide="vm.activities.owner">
+        <button class="btn success-btn left-icon cover-btn" ng-click="vm.requestBook()">
+          <i class="icon-requires-to-book"></i>
+          {{'REQUEST_TO_BOOK' | translate}}
+        </button>
+        <button class="btn primary-btn left-icon cover-btn">
+          <i class="icon-star-o"></i>
+          {{'WISH_LIST' | translate}}
+        </button>
+      </div>
+
+        <div class="buttons animated zoomIn" ng-show="vm.activities.owner">
+          <a class="btn primary-btn left-icon cover-btn" ui-sref="actiloo.edit-activity({id : vm.activities.id })">
+            <i class="icon-pencil"></i>
+            {{'EDIT' | translate}}
+          </a>
+          <button class="btn default-btn left-icon cover-btn" ng-click="vm.changeStatus()">
+            <i  ng-class="vm.activities.active ? 'icon-deactivate' : 'icon-tick'"></i>
+            <span class="text" ng-show="!vm.activities.active" data-ng-bind="'ACTIVATE' | translate"></span>
+            <span class="text" ng-show="vm.activities.active" data-ng-bind="'DEACTIVATE' | translate"></span>
+            <span class="loading" ng-if="vm.statusLoading">
+              <i class="glyphicon glyphicon-repeat gly-spin"></i>
+            </span>
+          </button>
+          <button class="btn danger-btn left-icon cover-btn">
+            <i class="icon-remove"></i>
+            {{'REMOVE' | translate}}
+          </button>
+        </div>
+
+        <div class="row reservations" ng-show="vm.activities.owner">
+          <div class="col-sm-12">
+            <h3 class="primary-heading text-center" data-ng-bind="'RESERVATIONS' | translate"></h3>
+            <div class="tabs">
+              <div class="text-center">
+                 <div class="btn-group" ng-class="{'has-error' : !vm.payload.cancelPlan &&  vm.submitted}">
+                <label class="btn radio-btn" ng-model="vm.reservationsTab" uib-btn-radio="'pending'" data-ng-bind="'WAITING_FOR_YOUR_RESPONSE' | translate" ng-change="vm.changeTab()"></label>
+                <label class="btn radio-btn" ng-model="vm.reservationsTab" uib-btn-radio="'pendingClient'" data-ng-bind="'WAITING_FOR_REQUESTER_RESPONSE' | translate" ng-change="vm.changeTab()"></label>
+                <label class="btn radio-btn" ng-model="vm.reservationsTab" uib-btn-radio="'confirmed'" data-ng-bind="'CONFIRMED' | translate" ng-change="vm.changeTab()"></label>
+                <label class="btn radio-btn" ng-model="vm.reservationsTab" uib-btn-radio="'canceled'" data-ng-bind="'CANCELED' | translate" ng-change="vm.changeTab()"></label>
+                <label class="btn radio-btn" ng-model="vm.reservationsTab" uib-btn-radio="'completed'" data-ng-bind="'COMPLETED' | translate" ng-change="vm.changeTab()"></label>
+              </div>
+              </div>
+            </div>
+
+            <div class="row" ng-if="vm.reservationLoading">
+              <div class="col-sm-12 page-loading">
+                <i class="glyphicon glyphicon-repeat gly-spin"></i>
+              </div>
+            </div>
+
+            <div class="row" ng-if="!vm.reservationLoading">
+              <div class="col-sm-12 page-loading" ng-if="!vm.reservations.length">
+                <p>No Reservation.</p>
+              </div>
+              <div class="col-sm-4 user animated zoomIn" ng-repeat="reservations in vm.reservations">
+                <a ui-sref="actiloo.single-reservation({id : reservations.id })">
+                  <div class="user-pic">
+                    <div class="pic">
+                      <img ng-src="{{reservations.user.avatar}}" width="70" height="70">
+                    </div>
+                    <span class="alert-count" ng-if="vm.reservations.participants" data-ng-bind="vm.reservations.participants"></span>
+                  </div>
+                  <div class="detail">
+                    <p class="name" data-ng-bind="reservations.user.firstname"></p>
+                    <p class="date">{{'FOR' | translate}} <strong class="text-danger" ng-show="reservations.startDate" data-ng-bind="reservations.startDate | dateFilter"></strong></p>
+                    <p class="places" ng-show="reservations.place" data-ng-bind="reservations.place"></p>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- REVIEWS-->
+        <div class="reviews animated zoomIn" ng-show="vm.activities.reviews">
+          <div class="row m-tb-md">
+            <div class="col-sm-12">
+              <button class="btn primary-btn left-icon cover-btn">
+                <i class="icon-reviews"></i>
+                <span data-ng-bind="'REVIEWS' | translate"></span>
+              </button>
+            </div>
+          </div>
+
+          <div class="row m-tb-md">
+            <div class="col-sm-12 text-center">
+              <div class="btn-group">
+                <label class="btn radio-btn" ng-model="vm.reviewIs" uib-btn-radio="'activity'" data-ng-bind="'ACTIVITY' | translate" ng-change="vm.changeReviewsTab()"></label>
+                <label class="btn radio-btn" ng-model="vm.reviewIs" uib-btn-radio="'user'" data-ng-bind="vm.activities.user.firstname" ng-change="vm.changeReviewsTab()"></label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Timeline -->
+          <div class="timeline">
+            <div class="line" ng-show="(vm.reviewIs == 'activity' && vm.activities.reviews.length)|| (vm.reviewIs == 'user' && vm.userReviews.length)"></div>
+            <div class="row activity-rating">
+              <div class="col-xs-6 col-sm-5">
+                <span class="key" data-ng-bind="vm.reviewIs == 'activity'  ? ('ACCURACY' | translate) : ('PONCTUALITY' | translate)"></span>
+              </div>
+              <div class="rating col-xs-6 col-sm-6">
+                <uib-rating ng-model="vm.rating1"
+                            max="5"
+                            readonly="true"
+                            on-hover="vm.hoveringOver(value)"
+                            on-leave="overStar = null"
+                            titles="['1','2','3']"
+                            state-on="'icon-star'"
+                            state-off="'icon-star-o'"
+                            aria-labelledby="default-rating">
+                </uib-rating>
+              </div>
+            </div>
+            <div class="row activity-rating">
+              <div class="col-xs-6 col-sm-5">
+                <span class="key" data-ng-bind="vm.reviewIs == 'activity'  ? ('QUALITY_OF_SERVICE' | translate) : ('FLEXIBILITY' | translate)"></span>
+              </div>
+              <div class="rating col-xs-6 col-sm-6">
+                <uib-rating ng-model="vm.rating2"
+                            max="5"
+                            readonly="true"
+                            on-hover="vm.hoveringOver(value)"
+                            on-leave="overStar = null"
+                            titles="['1','2','3']"
+                            state-on="'icon-star'"
+                            state-off="'icon-star-o'"
+                            aria-labelledby="default-rating">
+                </uib-rating>
+              </div>
+            </div>
+            <div class="row activity-rating">
+              <div class="col-xs-6 col-sm-5">
+                <span class="key" data-ng-bind="vm.reviewIs == 'activity'  ? ('VALUE' | translate) : ('COMMUNICATION' | translate)"></span>
+              </div>
+              <div class="rating col-xs-6 col-sm-6">
+                <uib-rating ng-model="vm.rating3"
+                            max="5"
+                            readonly="true"
+                            on-hover="vm.hoveringOver(value)"
+                            on-leave="overStar = null"
+                            titles="['1','2','3']"
+                            state-on="'icon-star'"
+                            state-off="'icon-star-o'"
+                            aria-labelledby="default-rating">
+                </uib-rating>
+              </div>
+            </div>
+
+            <div ng-show="vm.reviewIs == 'activity'">
+              <div ng-repeat="reviews in vm.activities.reviews">
+                <article class="panel panel-info">
+                  <div class="icon">
+                    <div class="user-image" >
+                      <img ng-src="{{reviews.user.avatar}}" width="55" height="55" ng-if="reviews.user.avatar">
+                      <i ng-if="!reviews.user.avatar" class="icon-user"></i>
+                    </div>
+                  </div>
+                  <div class="panel-body">
+                    <p>
+                      <span data-ng-bind="reviews.comment | limitTo : reviews.readLength || 100"></span>
+                    <span ng-if="reviews.comment.length > 100" ng-click="reviews.readLength = (reviews.comment.length == reviews.readLength)? 100 : reviews.comment.length">
+                      <span class="text-primary" data-ng-bind="(reviews.comment.length == reviews.readLength ? ('READ_LESS' | translate) : ('READ_MORE' | translate)) + '...'"></span>
+                     </span>
+                    </p>
+
+                    <div class="images">
+                      <a class="hover-effect" href="" ng-click="vm.openLightbox(reviews.photos, $index)" ng-repeat="image in reviews.photos">
+                        <img ng-src="{{image}}" alt="abc">
+                        <div class="hover-container">
+                          <span class="action">+</span>
+                        </div>
+                      </a>
+                    </div>
+
+                    <div class="rating" ng-init="reviews.rate = (reviews.accuracy + reviews.qos + reviews.value)/3 ">
+                      <uib-rating ng-model="reviews.rate"
+                                  max="5"
+                                  readonly="true"
+                                  on-hover="vm.hoveringOver(value)"
+                                  on-leave="overStar = null"
+                                  titles="['one','two','three']"
+                                  state-on="'icon-star'"
+                                  state-off="'icon-star-o'"
+                                  aria-labelledby="default-rating">
+
+                      </uib-rating>
+                    </div>
+
+                    <div>
+                      <span data-ng-bind="reviews.date | dateFilter"></span>
+                    </div>
+
+                  </div>
+                </article>
+              </div>
+            </div>
+
+            <div ng-show="vm.reviewIs == 'user'">
+              <div ng-repeat="reviews in vm.userReviews">
+                <article class="panel panel-info">
+                  <div class="icon">
+                    <div class="user-image" >
+                      <img ng-src="{{reviews.user.avatar}}" width="55" height="55" ng-if="reviews.user.avatar">
+                      <i ng-if="!reviews.user.avatar" class="icon-user"></i>
+                    </div>
+                  </div>
+                  <div class="panel-body">
+                    <p>
+                      <span data-ng-bind="reviews.comment | limitTo : reviews.readLength || 100"></span>
+                    <span ng-if="reviews.comment.length > 100" ng-click="reviews.readLength = (reviews.comment.length == reviews.readLength)? 100 : reviews.comment.length">
+                      <span class="text-primary" data-ng-bind="(reviews.comment.length == reviews.readLength ? ('READ_LESS' | translate) : ('READ_MORE' | translate)) + '...'"></span>
+                     </span>
+                    </p>
+
+                    <a class="hover-effect" href="" ng-click="vm.openLightbox(reviews.photos, $index)" ng-repeat="image in reviews.photos">
+                      <img ng-src="{{image}}" alt="abc">
+                      <div class="hover-container">
+                        <span class="action">+</span>
+                      </div>
+                    </a>
+
+                    <div class="rating" ng-init="reviews.rate = (reviews.ponctuality + reviews.flexibility + reviews.communication)/3 ">
+                      <uib-rating ng-model="reviews.rate"
+                                  max="5"
+                                  readonly="true"
+                                  on-hover="vm.hoveringOver(value)"
+                                  on-leave="overStar = null"
+                                  titles="['one','two','three']"
+                                  state-on="'icon-star'"
+                                  state-off="'icon-star-o'"
+                                  aria-labelledby="default-rating">
+
+                      </uib-rating>
+                    </div>
+
+                    <div>
+                      <span data-ng-bind="reviews.date | dateFilter"></span>
+                    </div>
+
+                  </div>
+                </article>
+              </div>
+            </div>
+
+          </div>
+          <!-- /Timeline -->
+
+        </div>
+
+      </div>
+
+      <!-- Right Panel -->
+      <div class="col-md-3 right-panel" ng-if="!vm.activities.owner">
+        <div class="widget booking" ng-show="vm.reservationsAll.length">
+          <h3>Booking History</h3>
+          <div class="widget-detail">
+            <div class="row m-tb-md" ng-repeat="reservations in vm.reservationsAll">
+              <div class="col-sm-1 icon">
+                <i class="icon-bullet"></i>
+              </div>
+              <div class="col-sm-11 history">
+                <a ui-sref="actiloo.single-reservation({id :reservations.id})">
+                  <span class="underline">
+                    <span data-ng-bind="reservations.startDate | dateFilter"></span>
+                    <span ng-show="reservations.endDate" data-ng-bind="('TO' | translate) + ' ' + (reservations.endDate | dateFilter) "></span>
+                  </span>
+                </a>
+                <div class="m-tb-sm">
+                  <span  class="label" ng-class="{'label-info' : (reservations.status == 'REQUEST_COMPLETED' ),
+                                  'label-danger' : (reservations.status == 'REQUEST_CANCELED' || reservations.status == 'REQUEST_REJECTED'),
+                                  'label-success' : (reservations.status == 'REQUEST_OK' ||reservations.status == 'CONFIRMED'),
+                                  'label-warning' : (reservations.status == 'REQUEST_CLIENT_MODIFIED' || reservations.status == 'REQUEST_OWNER_MODIFIED' || reservations.status == 'REQUEST_OWNER_OK' || reservations.status == 'NEW_REQUEST' )}"
+                          data-ng-bind="reservations.status | statusFilter"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  </div>
+
+</div>

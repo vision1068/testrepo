@@ -1,0 +1,48 @@
+<div class="modal-body request-book">
+  <h3>
+    <span>
+       <i class="icon-requires-to-book"></i>
+    Payment Details
+    </span>
+  </h3>
+
+  <form>
+    <div class="row m-tb-sm">
+      <div class="col-sm-6 circle-radio">
+        <input type="radio" id="radio01" name="radio" ng-model="vm.payload.duration.type" value="NA" />
+        <label for="radio01"><span><span class="dot"></span></span> &nbsp; {{'USE_EXISTING_PAYMENT_MODE' | translate}}</label>
+      </div>
+      <div class="col-sm-5">
+        <input class="form-control small-input">
+      </div>
+    </div>
+
+    <div class="row m-tb-sm">
+      <div class="col-sm-6 circle-radio">
+        <input type="radio" id="radio02" name="radio" ng-model="vm.payload.duration.type" value="NA" />
+        <label for="radio02"><span><span class="dot"></span></span> &nbsp; {{'USE_DIFFERENT_PAYMENT_MODE' | translate}}</label>
+      </div>
+      <div class="col-sm-6"></div>
+    </div>
+
+    <div class="row m-tb-sm">
+      <div class="col-sm-offset-1 col-sm-5 circle-radio">
+        <label data-ng-bind="'CARD_HOLDER_NAME' | translate"></label>
+      </div>
+      <div class="col-sm-6">
+        <input class="form-control small-input">
+      </div>
+    </div>
+
+    <div class="row m-tb-sm">
+      <div class="col-sm-offset-1 col-sm-5 circle-radio">
+        <label data-ng-bind="'CARD_NUMBER' | translate"></label>
+      </div>
+      <div class="col-sm-6">
+        <input class="form-control small-input">
+      </div>
+    </div>
+
+
+  </form>
+</div>

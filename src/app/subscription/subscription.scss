@@ -1,0 +1,16 @@
+.subscription{
+  width: 100%;
+  max-width: 600px;
+  margin:60px auto;
+  background : $color-code-1;
+  border: 1px solid $primary;
+  border-radius: 3px ;
+  padding: 35px;
+  z-index: -1;
+  form{
+    .forgot-link{
+      color: $primary;
+      text-decoration: none;
+    }
+  }
+}

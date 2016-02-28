@@ -1,0 +1,37 @@
+<div class="search-form">
+  <div class="container">
+    <form name="form" ng-submit="vm.search()" novalidate>
+      <div class="row">
+        <div class="col-sm-4 col-sm-offset-1">
+          <fieldset class="form-group round" >
+            <div class="select" ng-class="{'has-error' : !vm.where.length && vm.submitted }">
+              <input-auto-complete
+                placeholder="{{'WHERE' | translate}}"
+                max="1"
+                only="true"
+                add="vm.addTag()"
+                display="name"
+                tags-array="vm.where"
+                conditions="{{vm.autocompletePlaces}}">
+              </input-auto-complete>
+            </div>
+            <i class="icon-place place"></i>
+          </fieldset>
+        </div>
+        <div class="col-sm-4">
+          <fieldset class="form-group round typeahead-input">
+            <input type="text" ng-model="vm.tags" placeholder="{{'WHICH_SERVICE_ARE_YOU_LOOKING_FOR' | translate}}" uib-typeahead="tags for tags in vm.getTags($viewValue)" typeahead-loading="loadingTag" typeahead-no-results="noResults" class="form-control">
+            <i class="glyphicon glyphicon-search search"></i>
+            <span ng-show="loadingTag">
+              <i  class="glyphicon glyphicon-repeat gly-spin typeahead-loading"></i>
+            </span>
+          </fieldset>
+        </div>
+        <div class="col-sm-2">
+          <button type="submit" class="btn primary-btn pull-right" ng-disabled="vm.loading">Go
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

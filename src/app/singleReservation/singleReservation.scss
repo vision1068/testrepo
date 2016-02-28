@@ -1,0 +1,188 @@
+/* 'Single Reservation' page use 'Single Activity' page css*/
+.single-reservation{
+  .activity-details{
+    margin-top: 55px;
+    .widget.user{
+      position: relative;
+    }
+    .widget.details{
+      .detail{
+        line-height: 28px;
+        margin: 5px 0 ;
+        .icon{
+          position: absolute;
+          top:2px;
+          font-size: 22px;
+
+        }
+        .col-sm-10{
+          padding-right:0 ;
+        }
+      }
+    }
+    .widget.price-detail{
+      .detail{
+        line-height: 28px;
+        .value{
+          padding: 0;
+        }
+      }
+    }
+  }
+}
+
+/* Chat Conversation */
+.conversation{
+  overflow: hidden;
+  .chat{
+    margin: 12px 0;
+    .user{
+      text-align: center;
+      p {
+        margin: 0;
+        line-height: 22px;
+      }
+    }
+    .message{
+      position: relative;
+      .text {
+        border-radius: 5px;
+        z-index: 1;
+        p{
+          padding: 20px;
+          border-radius: 5px;
+          position: relative;
+          z-index: 3;
+          margin: 0;
+        }
+      }
+    }
+  }
+  .chat.receiver{
+    .message{
+      &:before{
+        content: '';
+        width: 20px;
+        height: 15px;
+        background: $color-code-1;
+        border : 1px solid $color-code-2;
+        position: absolute;
+        top:15px;
+        left:7px;
+        z-index: 2;
+        -webkit-transform: rotate(-45deg);
+        -moz-transform: rotate(-45deg);
+        -ms-transform: rotate(-45deg);
+        -o-transform: rotate(-45deg);
+      }
+    }
+  }
+  .chat.sender{
+    .message{
+      &:after{
+        content: '';
+        width: 20px;
+        height: 15px;
+        position: absolute;
+        top:15px;
+        right:7px;
+        z-index: 2;
+        -webkit-transform: rotate(-45deg);
+        -moz-transform: rotate(-45deg);
+        -ms-transform: rotate(-45deg);
+        -o-transform: rotate(-45deg);
+
+      }
+    }
+  }
+
+  .chat.sender.white,
+  .chat.receiver.white{
+    .message {
+      .text {
+        border : 1px solid $color-code-2;
+        p {
+          background: $color-code-1;
+        }
+      }
+    }
+  }
+  .chat.sender.white .message:after,
+  .chat.receiver.white .message:before{
+    background: $color-code-1;
+    border : 1px solid $color-code-2;
+  }
+
+  .chat.sender.primary,
+  .chat.receiver.primary{
+    .message {
+      .text {
+        border: 1px solid #b7d9d8;
+
+        p {
+          background: #d2f4f3;
+        }
+      }
+    }
+  }
+  .chat.sender.primary .message:after,
+  .chat.receiver.primary .message:before{
+    background: #d2f4f3;
+    border: 1px solid #b7d9d8;
+  }
+
+  .chat.sender.success,
+  .chat.receiver.success{
+    .message {
+      .text {
+        border: 1px solid #bcd6bd;
+
+        p {
+          background: #d6f5d6;
+        }
+      }
+    }
+  }
+  .chat.sender.success .message:after,
+  .chat.receiver.success .message:before{
+    background: #d6f5d6;
+    border: 1px solid #bcd6bd;
+  }
+
+  .chat.sender.info,
+  .chat.receiver.info{
+      .message {
+        .text {
+          border: 1px solid $info;
+
+          p {
+            background: #F1AF4E;
+          }
+        }
+      }
+    }
+  .chat.sender.info .message:after,
+  .chat.receiver.info .message:before{
+    background: #F1AF4E;
+    border: 1px solid $info;
+  }
+
+  .chat.sender.danger,
+  .chat.receiver.danger{
+    .message {
+      .text {
+        border: 1px solid $danger;
+
+        p {
+          background: #E48F8F;
+        }
+      }
+    }
+  }
+  .chat.sender.danger .message:after,
+  .chat.receiver.danger .message:before{
+    background: #E48F8F;
+    border: 1px solid $danger;
+  }
+}
+

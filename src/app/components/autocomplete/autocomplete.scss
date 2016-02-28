@@ -1,0 +1,64 @@
+.tags-input{
+  .host{
+    margin: 0;
+    &:focus{
+      outline: 0;
+    }
+    .tags{
+      min-height: 40px;
+      border-radius: 18px;
+      padding: 6px 10px;
+      border: 1px solid $color-code-7;
+      box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+      &:focus{
+        border-color: #66afe9;
+        outline: 0;
+        box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
+      }
+      input{
+        margin: 0 0 0 10px;
+        padding: 0;
+      }
+      .tag-list{
+        li{
+          margin: 0 10px 0 0;
+          background: $color-code-5;
+          border-radius: 18px;
+          padding: 0 10px;
+          border-color: $color-code-6;
+          .tag-template{
+            .remove-button{
+              margin: 0 5px 0 0;
+              color: $color-code-3;
+            }
+          }
+        }
+      }
+    }
+  }
+  .autocomplete{
+    .suggestion-list{
+      text-align: left !important;
+      .suggestion-item.selected{
+        background-color: $primary ;
+        em{
+          background-color: #FFD700;
+        }
+      }
+    }
+  }
+
+}
+
+.tags-input.stop{
+  input{
+    display: none;
+  }
+}
+
+.has-error .tags{
+  border-color: #a94442 !important;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075) !important;
+  //border-color: #843534;
+  //box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #ce8483;
+}

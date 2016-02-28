@@ -1,0 +1,18 @@
+.lightbox-modal{
+  .modal-content{
+    button.close {
+      margin: -10px -10px 0 0;
+    }
+    .btn-controller{
+      margin-top: -9px;
+      .btn-group{
+        a{
+          color: $primary;
+          i{
+            font-size: 15px;
+          }
+        }
+      }
+    }
+  }
+}

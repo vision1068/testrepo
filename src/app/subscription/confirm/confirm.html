@@ -1,0 +1,11 @@
+<form name="form" ng-submit="vm.confirm(form)" novalidate>
+    <fieldset>
+      <p>We are Happy that you joined us. Please confirm your account by entering the code received in the email</p>
+    </fieldset>
+    <fieldset class="form-group round" ng-class="{'has-error' : (form.code.$error.required) &&  vm.submitted}">
+      <input type="text" class="form-control" name="code" placeholder="Confirmation Code" ng-model="vm.code" required>
+    </fieldset>
+    <fieldset>
+      <button type="submit" class="btn primary-btn pull-right">Confirm</button>
+    </fieldset>
+  </form>

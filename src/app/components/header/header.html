@@ -1,0 +1,116 @@
+<div>
+  <header>
+    <nav class="header navbar  navbar-fixed-top">
+      <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a ui-sref="actiloo.home" class="navbar-brand">
+              <!--<img src="app/assets/images/logo.png" alt="Actiloo">-->
+              <i class="icon-logo"></i>
+          </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <!--with out login header-->
+          <ul class="nav navbar-nav navbar-right" ng-hide="vm.isLogin">
+            <li class="hidden">
+              <a href="#page-top"></a>
+            </li>
+            <li class="page-scroll" ui-sref-active="active">
+              <a ui-sref="actiloo.subscription.signup">
+                <i class="icon-pencil"></i>
+                <span data-ng-bind="'SIGN_UP' | translate"></span>
+              </a>
+            </li>
+            <li class="page-scroll" ui-sref-active="active">
+              <a ui-sref="actiloo.subscription.signin">
+                <i class="icon-signin"></i>
+                <span data-ng-bind="'SIGN_IN' | translate"></span>
+              </a>
+            </li>
+          </ul>
+
+
+          <!--with out login header-->
+
+          <ul class="nav navbar-nav navbar-right" ng-show="vm.isLogin">
+            <li class="hidden">
+              <a href="#page-top"></a>
+            </li>
+            <li class="page-scroll" ui-sref-active="active">
+              <a ui-sref="actiloo.new-activities">
+                <i class="icon-new-activity"></i>
+                <span data-ng-bind="'NEW_ACTIVITIES' | translate"></span>
+              </a>
+            </li>
+            <li class="page-scroll" ui-sref-active="active">
+              <a ui-sref="actiloo.my-activities">
+                <i class="icon-my-activity"></i>
+                <span data-ng-bind="'MY_ACTIVITIES' | translate"></span>
+              </a>
+            </li>
+            <li class="page-scroll" ui-sref-active="active">
+              <a ui-sref="actiloo.my-reservations">
+                <i class="icon-my-reservations"></i>
+                <span data-ng-bind="'MY_RESERVATIONS' | translate"></span>
+              </a>
+            </li>
+            <li  id="profile" class="page-scroll profile" ui-sref-active="active"  data-trigger="focus" actiloo-pop-over rel="popover" data-placement="bottom"  data-popover-content="#profile-nav">
+              <a href="">
+                <i class="icon-user user" ng-if="!vm.user.avatar"></i>
+                <div class="pic" ng-if="vm.user.avatar">
+                  <img ng-src="{{vm.user.avatar}}" width="50" height="50">
+                </div>
+                <span data-ng-bind="vm.user.firstname"></span>
+                <i class="icon-dropdown dropdown"></i>
+              </a>
+              <ul id="profile-nav" class="hide" ng-show="vm.isLogin">
+                <li>
+                  <a href="">
+                    <i class="icon-user user"></i>
+                    <span data-ng-bind="'PROFILE' | translate"></span>
+                  </a>
+                </li>
+                <li>
+                  <a href="">
+                    <i class="icon-settings"></i>
+                    <span data-ng-bind="'SETTINGS' | translate"></span>
+                  </a>
+                </li>
+                <li>
+                  <a href="" ng-click="vm.logout()">
+                    <i class="icon-logout"></i>
+                    <span data-ng-bind="'LOGOUT' | translate"></span>
+                  </a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+
+        </div>
+        <!-- /.navbar-collapse -->
+      </div>
+      <!-- /.container-fluid -->
+    </nav>
+
+  </header>
+
+  <!--  Authenticated bar  -->
+
+
+  <!--<div class="authenticated-bar" ng-show="vm.isLogin">
+    <p>
+      <i class="icon-authentication-icon"></i>
+      Your account currently not authenticated, check your email inbox for authentication <strong> OR </strong>
+      <button type="button" class="btn primary-btn text-capitalize">Re-Send Authentication</button>
+    </p>
+  </div>-->
+
+</div>

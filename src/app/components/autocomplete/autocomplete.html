@@ -1,0 +1,39 @@
+<tags-input ng-model="vm.tags"
+            display-property="{{vm.display}}"
+            key-property="id"
+            placeholder="{{vm.placeholder}}"
+            replace-spaces-with-dashes="false"
+            template="tag-template"
+            on-tag-adding="vm.beforeAdding($tag)"
+            add-from-autocomplete-only="{{vm.only}}"
+            on-tag-added="vm.TagAdd($tag)"
+            on-tag-removed="vm.TagRemove($tag)"
+            class="tags-input" ng-class="{stop : vm.tags.length == vm.max}">
+  <auto-complete source="vm.load($query)"
+                 min-length="0"
+                 load-on-focus="true"
+                 load-on-empty="true"
+                 max-results-to-show="32"
+                 template="autocomplete-template">
+  </auto-complete>
+  <span ng-if="vm.loading">
+    <i class="glyphicon glyphicon-repeat gly-spin"></i>
+   </span>
+</tags-input>
+
+<script type="text/ng-template" id="tag-template">
+  <div class="tag-template">
+    <a class="remove-button" ng-click="$removeTag()">&#10006;</a>
+    <span>{{$getDisplayText()}}</span>
+  </div>
+</script>
+
+<script type="text/ng-template" id="autocomplete-template">
+  <div class="autocomplete-template">
+    <div class="right-panel">
+      <span ng-bind-html="$highlight($getDisplayText())"></span>
+      <span ng-show="data.admin1" data-ng-bind="', ' + data.admin1"></span>
+      <span ng-show="data.country" data-ng-bind="', ' + data.country"></span>
+    </div>
+  </div>
+</script>

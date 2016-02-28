@@ -1,0 +1,337 @@
+/*This css file use 'Single Activity' & 'Single Reservation'  page*/
+
+.single-reservation,
+.single-activity{
+  .cover{
+    width: 100%;
+    height: 550px;
+    position: relative;
+    background: no-repeat fixed;
+    background-size: cover;
+    > div{
+      position: relative;
+      height: 100%;
+    }
+    .cover-btn{
+      position: relative;
+      overflow: hidden;
+      font-weight: normal;
+      margin-top: 40px;
+      span{
+        text-transform: initial;
+      }
+      input{
+        display: inline-block;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        cursor: pointer;
+      }
+    }
+    .pic{
+      width: 150px;
+      height: 150px;
+      background: $color-code-1;
+      border: 2px solid $primary;
+      border-radius: 50%;
+      position: absolute;
+      left:0;
+      bottom: -75px;
+      overflow: hidden;
+    }
+    .user{
+      font-size: 150px;
+      position: absolute;
+      left: 0;
+      bottom: -75px;
+      color: #42b6cf;
+      background: #fff;
+      line-height: 0;
+      border-radius: 50%;
+      width: 150px;
+      height: 150px;
+
+    }
+  }
+
+  .activity-details{
+    margin-top: 135px;
+    margin-bottom: 90px;
+
+    /*************** left-panel ***************/
+    .left-panel{
+      padding-left: 0 ;
+      .details{
+        .icon{
+          font-size: 26px;
+          position: relative;
+          top: -6px;
+          color: $primary;
+        }
+      }
+      .services{
+        p{
+          margin: 0;
+        }
+
+      }
+      .close-icon{
+        font-size: 16px;
+        font-weight: bold;
+      }
+    }
+
+    /*************** middle-panel ***************/
+    .middle-panel.col-md-9{
+      padding-right: 0;
+
+    }
+    .middle-panel{
+      .heading-section{
+        h3{
+          margin: 0;
+        }
+        button{
+          padding-left: 20px;
+          padding-right: 20px;
+          text-transform: inherit;
+          cursor: default;
+          &:hover{
+            color: inherit;
+            background: inherit;
+          }
+        }
+        .rating{
+          margin: 20px 0;
+          i{
+            cursor: default;
+          }
+        }
+        button{
+          font-size: 12px;
+        }
+      }
+      .description{
+        font-size: 16px;
+      }
+      .buttons{
+        margin: 30px 0 60px 0;
+       a, button{
+          margin: 0 10px 5px 0;
+          .loading{
+            i{
+              position: relative;
+              top: 1px;
+              left: 3px;
+              font-size: 14px;
+            }
+          }
+        }
+      }
+      .reservations{
+        background: $color-code-1;
+        border : 1px solid $color-code-2;
+        border-radius: 15px;
+        padding: 40px;
+        .tabs{
+          margin: 40px 0;
+        }
+        .user{
+          padding-right: 0;
+          padding-left: 0;
+          position: relative;
+          .user-pic{
+            float: left;
+            .pic{
+              width: 70px;
+              height: 70px;
+              border:1px solid $primary;
+              border-radius: 50%;
+              position: absolute;
+              top:0;
+              left:0;
+              overflow: hidden;
+            }
+            .alert-count{
+              font-size: 12px;
+              min-width: 20px;
+              height: 20px;
+              background: $danger;
+              display: inline-block;
+              text-align: center;
+              line-height: 20px;
+              border-radius: 50%;
+              color: $color-code-1;
+              position: relative;
+              z-index: 1;
+            }
+          }
+
+          .detail{
+            padding:6px 0 6pc 80px  ;
+            margin: 0;
+            P{
+              margin: 0;
+            }
+            .name{
+              font-size: 16px;
+              font-weight: bold;
+              color: $primary;
+            }
+            .date, .places{
+              font-size: 13px;
+              color: $color-code-3;
+
+            }
+          }
+        }
+      }
+      .reviews{
+        .activity-rating{
+          margin: 0 0 15px 55px;
+          .key{
+            line-height: 29px;
+          }
+        }
+        .panel-body{
+          .images{
+            a{
+              margin: 0 10px 10px 0 ;
+              float: left;
+              overflow: hidden;
+              border: 2px solid $primary;
+              border-radius: 15px;
+              img{
+                width: 200px;
+                height: 120px;
+              }
+            }
+          }
+          .rating{
+            margin: 20px 0 10px 0;
+          }
+        }
+
+
+      }
+    }
+    /*************** right-panel ***************/
+    .right-panel{
+      .booking{
+        .icon{
+          padding: 0;
+          i{
+            color: $primary;
+            font-size: 13px;
+            line-height: inherit;
+            position: relative;
+            right: -10px;
+            top: 2px;
+          }
+        }
+        .history{
+          padding-right: 0;
+        }
+      }
+      .btn{
+        padding-left: 20px;
+        padding-right: 20px;
+        border-width: 1px;
+        font-size: 13px;
+        margin-top: 8px;
+        text-align: center;
+      }
+    }
+  }
+}
+
+@media (min-width: $screen-xs-min) and (max-width: $screen-sm-min) {
+  .single-activity{
+    .cover{
+      height: 200px ;
+      .pic{
+        .user {
+          font-size: 100px;
+          left: 20px;
+          bottom: -50px;
+          width: 100px;
+          height: 100px;
+        }
+      }
+    }
+
+
+  }
+}
+
+@media (min-width: $screen-sm-min) and (max-width: $screen-md-min) {
+  .single-activity{
+    .cover{
+      height: 350px ;
+      .pic{
+        .user {
+          font-size: 120px;
+          bottom: -55px;
+          width: 120px;
+          height: 120px;
+        }
+      }
+    }
+  }
+}
+
+
+.hover-effect {
+  position: relative;
+  .hover-container {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(255, 255, 255, 0.75);
+    color: #383838;
+    border-radius: 12px;
+    -webkit-transform: scale(0);
+    -ms-transform: scale(0);
+    transform: scale(0);
+    -webkit-transition: all 0.3s;
+    transition: all 0.3s;
+  }
+  .hover-container .action {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    padding: 0 7px;
+    -webkit-transform: scale(0);
+    -ms-transform: scale(0);
+    transform: scale(0);
+    margin-top: -9px;
+    margin-left: -9px;
+    border: 1px solid #000;
+    color: #000;
+    -webkit-transition: transform 0.3s 0.1s, border-color 0.3s, color 0.3s;
+    -ms-transition: transform 0.3s 0.1s, border-color 0.3s, color 0.3s;
+    transition: transform 0.3s 0.1s, border-color 0.3s, color 0.3s;
+  }
+  .hover-container .action:hover {
+    border-color: #7595a0;
+    color: #7595a0;
+  }
+  &:hover {
+    .hover-container {
+      -webkit-transform: scale(1);
+      -ms-transform: scale(1);
+      transform: scale(1);
+      .action {
+        -webkit-transform: scale(1);
+        -ms-transform: scale(1);
+        transform: scale(1);
+      }
+    }
+  }
+}
+

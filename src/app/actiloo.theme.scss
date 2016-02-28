@@ -1,0 +1,966 @@
+/**
+ *  If you want to override some bootstrap variables, you have to change values here.
+ *  The list of variables are listed here bower_components/bootstrap-sass/assets/stylesheets/bootstrap/_variables.scss
+ */
+//@import "https://fonts.googleapis.com/css?family=Open+Sans";
+@import "https://fonts.googleapis.com/css?family=Roboto";
+@import "https://file.myfontastic.com/shCotf5GPKNzpneuwKyN8R/icons.css";
+$icon-font-path: "../../bower_components/bootstrap-sass/assets/fonts/bootstrap/";
+
+/**************************************** color code  start ***********************************************/
+$background : #f5f5f5;
+$primary: #ffd700;
+$primary-rgba : rgba(255, 215, 0, 0.82);
+$primary-hover: #54A2B3;
+$error: #a94442 ;
+$success: #45cf42 ;
+$success-rgba : rgba(69, 207, 66, 0.71);
+$danger : #db5454;
+$dangers-rgba : rgba(219, 84, 84, 0.63);
+$warning : #FBBC05;
+$warning-rgba : rgba(251, 188, 5, 0.64);
+$info : #42b6cf;
+$info-rgba :rgba(66, 182, 207, 0.69);
+$default-rgba :  rgba(3, 3, 3, 0.63);
+$font-family-base : 'Roboto', sans-serif;
+$black: #000000;
+$color-code-1 : #ffffff;
+$color-code-2 : #efefef;
+$color-code-3 : #333333;
+$color-code-4 : #d2f4f3;
+$color-code-5 : #f5fbfd;
+$color-code-6 : #e0e7ea;
+$color-code-7 : #cccccc;
+$color-code-8 : #f8f8f8;
+$color-code-9 : #9a9a9a;
+
+/**************************************** color code  start ***********************************************/
+
+/**
+ *  Do not remove the comments below. It's the markers used by wiredep to inject
+ *  sass dependencies when defined in the bower.json of your dependencies
+ */
+// bower:scss
+// endbower
+
+html{
+  height: 100%;
+  body{
+    font-family: $font-family-base;
+    font-size: 14px;
+    color: $color-code-3;
+    height: 100%;
+    background-color: $background;
+    .actiloo {
+      height: 100%;
+    }
+
+    /*************************** General  style and classes start ***************************/
+    *:focus {
+      outline: 0;
+    }
+
+    a{
+      text-decoration :none;
+      &:focus, &:hover {
+        background-color: transparent !important;
+        text-decoration :none
+      }
+    }
+
+    .underline {
+      border-bottom: 1px solid $color-code-3;
+    }
+
+    .text-success {
+      color: $success;
+    }
+
+    .text-danger {
+      color: $danger;
+    }
+
+    .text-primary {
+      color: $primary;
+    }
+
+    .has-error{
+      [type="checkbox"]:not(:checked) + label:before,
+      [type="checkbox"]:checked + label:before,
+      .radio-btn{
+        border-color: $error;
+      }
+    }
+
+    .rating{
+      i{
+        color: $primary;
+        font-size: 24px;
+      }
+    }
+
+    .page-loading{
+      font-size: 25px;
+      color: $primary;
+      margin: 40px 0;
+      text-align: center;
+    }
+    /*************************** General  style and classes end ***************************/
+
+    /*************************** labels classes start ***************************/
+    .primary-label,
+    .success-label,
+    .danger-label,
+    .warning-label,
+    .info-label,
+    .default-label{
+      display: inline-block;
+      height: 40px;
+      line-height: 40px;
+      padding: 0 20px;
+      color: $color-code-1;
+      border: 2px solid $color-code-1;
+      border-radius: 25px ;
+      background: $default-rgba;
+    }
+
+
+    .success-label{
+      background: $success-rgba;
+      border-color: $success;
+    }
+
+    .danger-label{
+      background: $dangers-rgba;
+      border-color: $danger;
+    }
+
+    .warning-label{
+      background: $warning-rgba;
+      border-color: $warning;
+    }
+
+    .info-label{
+      background: $info-rgba;
+      border-color: $info;
+    }
+    /*************************** labels classes end ***************************/
+
+
+    /*************************** margin classes start ***************************/
+    .n-m{
+      margin: 0;
+    }
+    .m-sm{
+      margin: 5px;
+    }
+    .m-tb-md{
+      margin-top:10px ;
+      margin-bottom:10px ;
+    }
+
+    .m-tb-sm{
+      margin-top:5px ;
+      margin-bottom:5px ;
+    }
+
+    .m-b-sm{
+      margin-bottom : 5px ;
+    }
+
+    .m-b-md{
+      margin-bottom : 10px ;
+    }
+    /*************************** margin classes end ***************************/
+
+    /*************************** padding classes start ***************************/
+    .n-p{
+      padding: 0;
+    }
+    .n-p-l{
+      padding-left: 0;
+    }
+    .p-lr-sm{
+      padding-left: 5px;
+      padding-right: 5px;
+    }
+    /*************************** padding classes end ***************************/
+
+    /*************************** heading start ***************************/
+    .heading{
+      //background: #d2f4f3;
+      height: 50px;
+      margin: 40px 0;
+      text-align: center;
+      line-height: 50px;
+    }
+    .primary-heading{
+      color: $black;
+      font-weight: bold;
+      font-size: 30px;
+    }
+    /*************************** heading end ***************************/
+
+
+    /*************************** input labels start ***************************/
+    .flat-label,
+    .input-label{
+      padding-right: 0;
+      line-height: 40px;
+      label{
+        color: $color-code-3;
+        font-weight: normal;
+        margin: 0;
+        line-height: initial;
+      }
+    }
+
+    .flat-label{
+      line-height: 28px;
+    }
+    /*************************** input label end ***************************/
+
+    /*************************** input field circular start ***************************/
+    .round{
+      margin-bottom: 20px;
+      input, select, textarea{
+        height: 40px;
+        border-radius: 18px;
+        padding: 6px 20px;
+        width: 100%;
+      }
+    }
+    .round.left-icon{
+      position: relative;
+      i{
+        position: absolute;
+        left: 12px;
+        top: 12px;
+        font-size: 17px;
+        color: $color-code-9;
+      }
+      input{
+        padding-left: 35px;
+      }
+    }
+
+    textarea{
+      height: inherit !important;
+      resize: none;
+    }
+    .select{
+      position: relative;
+      i{
+        position: absolute;
+        right: 20px;
+        top: 15px;
+        font-size: 11px;
+        color: $primary;
+      }
+    }
+    .small-input{
+      height: 28px;
+      padding: 3px 12px;
+    }
+    /*************************** input field circular end ***************************/
+
+    /**/
+    .typeahead-input{
+      position: relative;
+      ul.dropdown-menu{
+        width: 100%;
+        li, li.active{
+          a{
+            &:hover{
+              background-color: $primary !important;
+            }
+          }
+        }
+        li.active{
+          a{
+            background-color: $primary !important;
+          }
+        }
+      }
+      .typeahead-loading{
+        position: absolute;
+        top:9px;
+        right: 9px;
+      }
+    }
+
+    /*************************** flat-select box start ***************************/
+    .flat-select{
+      position: relative;
+      select{
+        height: 28px;
+        padding: 3px 12px;
+        z-index: 2;
+        position: relative;
+        background: transparent;
+        cursor: pointer;
+      }
+      &:after{
+        content: "\67";
+        font-family: "untitled-font-3" !important;
+        color: #fff;
+        width: 25px;
+        height: 28px;
+        line-height: 28px;
+        background: $primary;
+        position: absolute;
+        top: 0;
+        right: 0;
+        text-align: center;
+        z-index: 1;
+        font-size: 9px;
+        border-top-right-radius: 3px;
+        border-bottom-right-radius: 3px;
+      }
+    }
+    select {
+      color: rgb(169, 169, 171);
+      -webkit-appearance:none;
+      -moz-appearance:none;
+      -o-appearance:none;
+      appearance:none;
+    }
+    select::-ms-expand{
+      display:none;
+    }
+    /*************************** flat-select box end ***************************/
+
+    /**/
+    .temp-grid{
+      position: absolute;
+      bottom: -27px;
+      left: 25px;
+    }
+    .temp-list{
+      position: absolute;
+      left: 16px;
+      top: 16px;
+    }
+
+    .user-image {
+      width: 55px;
+      height: 55px;
+      border: 1px solid $primary;
+      border-radius: 50%;
+      overflow: hidden;
+      background: #fff;
+      margin: auto;
+      position: relative;
+      i {
+        position: absolute;
+        top: -3px;
+        left: 0;
+        color: $primary;
+        font-size: 53px;
+      }
+    }
+
+
+    /*************************** Toast start ***************************/
+    .error-toast,.info-toast,.success-toast,.warning-toast{
+      width: 400px !important;
+      margin: 5px auto !important;
+      padding-right: 20px !important;
+    }
+
+  .error-toast{
+    background: $dangers-rgba;
+    border: 1px solid $danger;
+  }
+
+    .info-toast{
+      background: $primary-rgba;
+      border: 1px solid $primary;
+    }
+
+    .success-toast{
+      background: $success-rgba;
+      border: 1px solid $success;
+    }
+
+    .warning-toast{
+      background: $info-rgba;
+      border: 1px solid $info;
+    }
+    /*************************** Toast End ***************************/
+
+
+    /*************************** button start***************************/
+    .success-btn,
+    .danger-btn,
+    .error-btn,
+    .primary-btn,
+    .warning-btn,
+    .info-btn,
+    .default-btn{
+      padding: 0 40px;
+      height: 40px;
+      border-radius: 15px;
+      font-weight: bold;
+      line-height: 36px;
+      color: $color-code-1;
+      &:focus {
+        outline:0;
+        color: $color-code-1;
+      }
+      &:hover{
+        background: transparent;
+      }
+      &:active{
+        &:focus{
+          outline:0;
+        }
+      }
+    }
+
+    .success-btn.left-icon,
+    .danger-btn.left-icon,
+    .error-btn.left-icon,
+    .primary-btn.left-icon,
+    .warning-btn.left-icon,
+    .info-btn.left-icon,
+    .default-btn.left-icon{
+      position: relative;
+      padding-left: 60px ;
+      i{
+        position: absolute;
+        font-size: 24px;
+        top: 4px;
+        left: 25px;
+        padding: 0 1px;
+      }
+      .loading{
+        position: relative;
+        i{
+          font-size: 12px;
+          left: 5px;        }
+      }
+    }
+
+
+    .primary-btn{
+      border: 2px solid $primary;
+      background: $primary ;
+      &:hover{
+        color: $primary;
+      }
+    }
+
+    .error-btn{
+      border: 2px solid $error;
+      background: $error ;
+      &:hover{
+        color: $error;
+      }
+    }
+
+    .danger-btn{
+      border: 2px solid $danger;
+      background: $danger ;
+      &:hover{
+        color: $danger;
+      }
+    }
+
+    .success-btn{
+      border: 2px solid $success;
+      background: $success ;
+      &:hover{
+        color: $success;
+      }
+    }
+
+    .default-btn{
+      border: 2px solid $color-code-3;
+      background: $color-code-3 ;
+      &:hover{
+        color: $color-code-3;
+      }
+    }
+
+    .warning-btn{
+      border: 2px solid $warning;
+      background: $warning ;
+      &:hover{
+        color: $warning;
+      }
+    }
+
+    .info-btn{
+      border: 2px solid $info;
+      background: $info ;
+      &:hover{
+        color: $info;
+      }
+    }
+
+    .upload-btn{
+      position: relative;
+      overflow: hidden;
+      span{
+        color: $color-code-1;
+        text-transform: initial;
+      }
+      input{
+        display: inline-block;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        cursor: pointer;
+      }
+      &:hover{
+        span{
+          color: $color-code-1;
+        }
+      }
+
+    }
+
+    /*************************** button end***************************/
+
+    /*************************** flat radio start ***************************/
+    .radio-btn{
+      color: $color-code-3;
+      background-color: $color-code-1;
+      border-color: $color-code-2;
+      height: 28px;
+      padding: 3px 12px;
+    }
+    .radio-btn.active{
+      color: $color-code-1;
+      background-color: $primary;
+    }
+    /*************************** flat radio end ***************************/
+
+    /*************************** circular radio btn start ***************************/
+    input[type="radio"] {
+      display:none;
+    }
+    input[type="radio"] + label {
+      color: $color-code-3;
+      font-weight: normal;
+    }
+    input[type="radio"] + label span {
+      display:inline-block;
+      width: 25px;
+      height: 25px;
+      margin: 0;
+      vertical-align:middle;
+      cursor:pointer;
+      -moz-border-radius:  50%;
+      border-radius:  50%;
+    }
+    input[type="radio"] + label > span {
+      background-color:#fff;
+      border: 1px solid #ccc;
+    }
+    input[type="radio"]:checked + label > span{
+      position: relative;
+    }
+    input[type="radio"]:checked + label span span.dot{
+      background-color: $primary;
+      position: absolute;
+      width: 13px;
+      height: 13px;
+      top: 5px;
+      right: 5px;;
+    }
+    input[type="radio"] + label span,
+    input[type="radio"]:checked + label span {
+      -webkit-transition:background-color 0.4s linear;
+      -o-transition:background-color 0.4s linear;
+      -moz-transition:background-color 0.4s linear;
+      transition:background-color 0.4s linear;
+    }
+
+    .circle-radio{
+      label{
+        margin: 0;
+        padding-left: 35px;
+      }
+    }
+    /*************************** circular radio btn end ***************************/
+
+    /*************************** check box start ***************************/
+
+    /* Base for label styling */
+    [type="checkbox"]:not(:checked),
+    [type="checkbox"]:checked {
+      position: absolute;
+      left: -9999px;
+    }
+    [type="checkbox"]:not(:checked) + label,
+    [type="checkbox"]:checked + label {
+      position: relative;
+      padding-left: 35px;
+      cursor: pointer;
+      margin: 0;
+      font-weight: normal;
+      color: $color-code-3
+    ;
+    }
+    /* checkbox aspect */
+    [type="checkbox"]:not(:checked) + label:before,
+    [type="checkbox"]:checked + label:before {
+      content: '';
+      position: absolute;
+      left:0;
+      top: 0;
+      width: 28px;
+      height: 28px;
+      border: 1px solid $color-code-7;
+      border-radius: 2px;
+    }
+    /* checked mark aspect */
+    [type="checkbox"]:not(:checked) + label:after,
+    [type="checkbox"]:checked + label:after {
+      content: "\73";
+      position: absolute;
+      font-family: "untitled-font-3" !important;
+      top: 7px;
+      left: 5px;
+      font-size: 18px;
+      line-height: 0.8;
+      color: $primary;
+      transition: all .2s;
+    }
+    /* checked mark aspect changes */
+    [type="checkbox"]:not(:checked) + label:after {
+      opacity: 0;
+      transform: scale(0);
+    }
+    [type="checkbox"]:checked + label:after {
+      opacity: 1;
+      transform: scale(1);
+    }
+    /* disabled checkbox */
+    [type="checkbox"]:disabled:not(:checked) + label:before,
+    [type="checkbox"]:disabled:checked + label:before {
+      box-shadow: none;
+      border-color: $color-code-7;
+      background-color: $color-code-7;
+    }
+    [type="checkbox"]:disabled:checked + label:after {
+      color: $color-code-7;
+    }
+    [type="checkbox"]:disabled + label {
+      color: $color-code-7;
+    }
+    [type="checkbox"]:focus + label {
+      border: none !important;
+      outline: none !important;
+    }
+    /* accessibility */
+    [type="checkbox"]:checked:focus + label:before,
+    [type="checkbox"]:not(:checked):focus + label:before {
+      border: 1px solid $color-code-7;
+    }
+    /* hover style just for information */
+    label:hover:before {
+      border: 1px solid  $primary !important;
+    }
+
+    .check-box{
+      label{
+        margin: 0;
+        padding-left: 50px;
+        line-height: 28px;
+        &:before{
+          width: 28px;
+          height: 28px;
+        }
+        &:after{
+          top: 7px;
+          left: 5px;
+          font-size: 18px;
+        }
+      }
+    }
+    /*************************** check box end ***************************/
+
+    /*************************** Date picker start ***************************/
+    .date-picker{
+      padding-right: 45px;
+      position: relative;
+      .date-picker-btn{
+        background: none;
+        border: none;
+        color: $primary;
+        padding: 0;
+        position: absolute;
+        top: 0;
+        right: 0;
+        height: 100%;
+        .drop-arrow{
+          font-size: 10px;
+        }
+        .calender{
+          font-size: 20px;
+        }
+      }
+    }
+    /*************************** Date picker end ***************************/
+
+    /*************************** bootstrap tabs start ***************************/
+    .tabset{
+      ul{
+        margin-left: 25px;
+        border-bottom: none;
+        position: relative;
+        bottom: -3px;
+        li{
+          background: $primary;
+          display: inline-block;
+          float: left;
+          border-top: 1px solid $color-code-2;
+          border-bottom: none;
+          border-radius: 8px 10px 0 0;
+          margin: 0;
+          box-sizing: border-box;
+          transform: skew(30deg);
+          z-index: 1;
+          outline: none;
+          div{
+            color: $color-code-1;
+            background: transparent;
+            margin: 0;
+            padding: 6.5px 20px 6.5px 15px;
+            cursor: pointer;
+            transform: skew(-30deg);
+            width: 100%;
+            outline: none;
+            border: none;
+            &:hover{
+              background-color: transparent;
+              color: $color-code-1;
+              height: 35px;
+              border: transparent;
+            }
+          }
+          &:hover{
+            background: $primary-hover ;
+          }
+        }
+        li:first-child{
+          &:before{
+            content: '';
+            width: 20px;
+            height: 30px;
+            background: $primary;
+            position: absolute;
+            transform: skew(-30deg);
+            bottom: 0;
+            left: -8px;
+            border-left: 1px solid $primary;
+          }
+          &:hover{
+            &:before {
+              background: $primary-hover;
+              border-color: $primary-hover;
+            }
+          }
+        }
+
+        li.active:first-child{
+          &:before{
+            background: $color-code-1;
+            border-color: $color-code-2;
+          }
+        }
+        li.active{
+          background: $color-code-1;
+          bottom: -1px;
+          div{
+            color: $color-code-3;
+            background-color: transparent !important;
+            border: none;
+            &:hover, &:focus{
+              background-color: transparent  !important;;
+              border: none;
+              cursor: default;
+            }
+          }
+
+        }
+      }
+      .template{
+        background: $color-code-1;
+        padding: 20px;
+        border: 2px solid $color-code-2;
+        border-radius: 10px;
+      }
+    }
+    /*************************** bootstrap tabs  end ***************************/
+
+    /*************************** Time line start ***************************/
+    .timeline{
+      position: relative;
+      padding: 21px 0 10px;
+      margin-top: 4px;
+      margin-bottom: 30px;
+      .line {
+        position: absolute;
+        width: 4px;
+        display: block;
+        background: $color-code-2;
+        top: 0;
+        bottom: 0;
+        margin-left: 30px;
+        color: $color-code-2;
+        &:before{ top: -4px; }
+        &:after{ bottom: -4px; }
+        &:before,
+        &:after {
+          content: '';
+          position: absolute;
+          left: -4px;
+          width: 12px;
+          height: 12px;
+          display: block;
+          border-radius: 50%;
+          background: $color-code-2;
+        }
+      }
+      .panel {
+        position: relative;
+        margin: 10px 0 60px 70px;
+        clear: both;
+        border-color: transparent;
+        background: transparent;
+        box-shadow: none;
+        &:before {
+          position: absolute;
+          display: block;
+          top: 8px;
+          left: -24px;
+          content: '';
+          width: 0;
+          height: 0;
+          border: inherit;
+          border-width: 12px;
+          border-top-color: transparent;
+          border-bottom-color: transparent;
+          border-left-color: transparent;
+        }
+        .icon {
+          position: absolute;
+          left: -68px;
+          display: block;
+          width: 55px;
+          height: 55px;
+          padding: 0;
+          border-radius: 50%;
+          text-align: center;
+          float: left;
+        }
+        .panel-body{
+          padding: 10px 0 0;
+        }
+      }
+    }
+    /*************************** Time line end ***************************/
+
+
+
+    /*************************** widget start end ***************************/
+    .widget{
+      background: $color-code-1;
+      border: 1px solid $color-code-2 ;
+      border-radius: 25px ;
+      margin-bottom: 30px ;
+      h3{
+        color: $primary;
+        padding: 20px;
+        margin: 0;
+        border-bottom: 1px solid $color-code-2;
+        font-size: 18px;
+        font-weight: bold;
+        //text-transform: uppercase;
+        text-align: center;
+      }
+      .widget-detail{
+        color: $color-code-3;
+        padding: 10px 20px;
+        p{
+          margin: 10px 0;
+        }
+      }
+    }
+    .widget.user{
+      .image{
+        position: absolute;
+        width: 55px;
+        height: 55px;
+        border: 1px solid #ccc;
+        border-radius: 50%;
+        overflow: hidden;
+        left: 25px;
+        top: -27px;
+        background: #fff;
+      }
+    }
+    /*************************** widget start end ***************************/
+
+    /* bootstrap popup */
+
+
+    /*************************** bootstrap glyph icon spin start* ***************************/
+    .gly-spin {
+      -webkit-animation: spin 2s infinite linear;
+      -moz-animation: spin 2s infinite linear;
+      -o-animation: spin 2s infinite linear;
+      animation: spin 2s infinite linear;
+    }
+    @-moz-keyframes spin {
+      0% {
+        -moz-transform: rotate(0deg);
+      }
+      100% {
+        -moz-transform: rotate(359deg);
+      }
+    }
+    @-webkit-keyframes spin {
+      0% {
+        -webkit-transform: rotate(0deg);
+      }
+      100% {
+        -webkit-transform: rotate(359deg);
+      }
+    }
+    @-o-keyframes spin {
+      0% {
+        -o-transform: rotate(0deg);
+      }
+      100% {
+        -o-transform: rotate(359deg);
+      }
+    }
+    @keyframes spin {
+      0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+      }
+      100% {
+        -webkit-transform: rotate(359deg);
+        transform: rotate(359deg);
+      }
+    }
+    /*************************** bootstrap glyph icon spin end ****************************/
+
+  }
+}
+
+/**
+ *  Do not remove the comments below. It's the markers used by gulp-inject to inject
+ *  all your sass files automatically
+ */
+// injector
+// endinjector
